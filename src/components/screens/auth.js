@@ -8,34 +8,26 @@ import {
 	Dimensions,
 	Image
 } from 'react-native';
-import { Actions } from 'react-native-router-flux'
-import { connect } from 'react-redux';
 import {
 	fb,
 	main1
 } from '../../images/images';
-import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
+import * as authActions from '../actions/authActions';
+import { connect } from 'react-redux';
 
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width
+import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
 
 class Auth extends Component {
     constructor(props) {
         super(props);		
 				
-        this.login = this.login.bind(this)
+		this.login = this.login.bind(this)
 	}
 	
 	login() {
-		FBLoginManager.login(function(error, data){
-			if (!error) {
-				console.log('logindata', data)
-				// this.setState({ user : data});
-				// this.props.onLogin && _this.props.onLogin();
-			} else {
-				console.log(error, data);
-			}
-		});
+		this.props.facebookAuth()
 	}
     
     render() {
@@ -50,7 +42,7 @@ class Auth extends Component {
 							FASH
 						</Text>
 						<TouchableOpacity
-							onPress={Actions.tab}
+							onPress={this.login}
 							style={[styles.center, styles.button]}
 						>
 							<Image style={styles.thumbnailStyle} source={fb}/>
@@ -114,4 +106,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Auth
+export default connect(null, authActions)(Auth);

@@ -6,15 +6,15 @@ import {
     View
 } from 'react-native';
 import Main from './src/main';
-// import {store} from './src/store';
+import {store} from './src/store';
 import { Provider } from 'react-redux';
 
 export default class Fash extends React.Component {
 	render() {
 		return (			
-			// <Provider store={store}>
+			<Provider store={store}>
 				<Main/>      		
-			// </Provider>
+			</Provider>
 		);
 	}
 }
