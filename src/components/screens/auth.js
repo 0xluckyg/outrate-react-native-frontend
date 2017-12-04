@@ -14,7 +14,7 @@ import {
 	fb,
 	main1
 } from '../../images/images';
-import FBSDK, {LoginManager} from 'react-native-fbsdk'
+import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
 
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width
@@ -27,18 +27,14 @@ class Auth extends Component {
 	}
 	
 	login() {
-		LoginManager.logInWithReadPermissions(['public_profile'])
-		.then(result => {
-			if (result.isCancelled) {
-
+		FBLoginManager.login(function(error, data){
+			if (!error) {
+				// this.setState({ user : data});
+				// this.props.onLogin && _this.props.onLogin();
 			} else {
-				console.log('success')
-				Actions.tab()
-				success = result.grantedPermissions
+				console.log(error, data);
 			}
-		}, err => {
-			console.log('err')
-		})
+		});
 	}
     
     render() {
@@ -48,11 +44,12 @@ class Auth extends Component {
 				style={styles.backgroundImage}				
 			>
 				<View style={styles.overlay}>
+						<FBLogin />
 						<Text style={styles.appLogo}>
 							FASH
 						</Text>
 						<TouchableOpacity
-							onPress={Actions.tab}
+							onPress={this.login}
 							style={[styles.center, styles.button]}
 						>
 							<Image style={styles.thumbnailStyle} source={fb}/>
