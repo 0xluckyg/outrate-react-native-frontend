@@ -29,6 +29,7 @@ class Auth extends Component {
 	login() {
 		FBLoginManager.login(function(error, data){
 			if (!error) {
+				console.log('logindata', data)
 				// this.setState({ user : data});
 				// this.props.onLogin && _this.props.onLogin();
 			} else {
@@ -49,7 +50,7 @@ class Auth extends Component {
 							FASH
 						</Text>
 						<TouchableOpacity
-							onPress={this.login}
+							onPress={Actions.tab}
 							style={[styles.center, styles.button]}
 						>
 							<Image style={styles.thumbnailStyle} source={fb}/>
