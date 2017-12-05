@@ -102,15 +102,14 @@ class Post extends Component {
                     ]}
                 />
                 <View {...this._panResponder.panHandlers}>                    
-                    <TouchableOpacity
-                        style={styles.imageView}
-                        onPress={()=> this.props.goToOnPress({data: this.props.data})}
+                    <View
+                        style={styles.imageView}                        
                         activeOpacity={1}
                     >
                         <ImageBackground style={styles.image} source={this.props.data.image.image}>
                             {this.isMoving()}                  
                         </ImageBackground>                    
-                    </TouchableOpacity>                    
+                    </View>                    
                 </View>
                 <Tags tags={this.props.data.tags}/>            
             </View>

@@ -7,7 +7,8 @@ import Auth from './screens/auth';
 import Photo from './screens/photo';
 import Newsfeed from './screens/newsfeed/newsfeed';
 import PostView from './screens/postView';
-import Upload from './screens/upload';
+import Upload from './screens/upload/upload';
+import UploadSelected from './screens/upload/uploadSelected';
 import Profile from './screens/profile/profile';
 import Settings from './screens/settings';
 
@@ -92,24 +93,20 @@ class RouterComponent extends Component {
                                     sceneStyle={styles.sceneStyle}
                                     title='Newsfeed'                                                                                                
                             />
-                            <Scene
-                                    key='post'
-                                    component={PostView}                                                                    
-                                    titleStyle={styles.headerFontStyle}
-                                    sceneStyle={styles.sceneStyle}
-                                    hideNavBar
-                                    title='Swipe to rate!'
-                                    backButtonImage={back}
-                            />
                         </Scene>
                         <Scene key='uploadTab' title='uploadTab' icon={TabIcon}>               
                             <Scene
                                     key='upload'
                                     hideNavBar
-                                    component={Upload}                                
-                                    titleStyle={styles.headerFontStyle}
+                                    component={Upload}                                                                    
                                     sceneStyle={styles.sceneWithoutTabbarStyle}
                                     title='Upload'                                                                    
+                            />
+                            <Scene
+                                    key='uploadSelected'
+                                    component={UploadSelected}                                                                                                        
+                                    sceneStyle={styles.sceneStyle}
+                                    hideNavBar                                
                             />
                         </Scene>
                         <Scene key='profileTab' title='profileTab' icon={TabIcon}>               

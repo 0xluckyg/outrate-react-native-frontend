@@ -6,7 +6,7 @@ import {
     Text
 } from 'react-native';
 
-const Tag = (tag) => {
+const Tag = (tag) => {    
 
     const formatTag = (tag) => {
         if (tag.length > 10) {
@@ -32,7 +32,7 @@ class Tags extends Component {
 			<View style={styles.mainView}>                
                 {
                     this.props.tags.map(tag => {
-                        return ( <Tag key={tag} tag={tag}/> )
+                        return ( <Tag key={tag.name} tag={tag.name}/> )
                     })
                 }
             </View>

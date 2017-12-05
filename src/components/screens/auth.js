@@ -21,13 +21,7 @@ import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
 
 class Auth extends Component {
     constructor(props) {
-        super(props);		
-				
-		this.login = this.login.bind(this)
-	}
-	
-	login() {
-		this.props.facebookAuth()
+        super(props);				
 	}
     
     render() {
@@ -42,7 +36,7 @@ class Auth extends Component {
 							FASH
 						</Text>
 						<TouchableOpacity
-							onPress={this.login}
+							onPress={this.props.facebookAuth}
 							style={[styles.center, styles.button]}
 						>
 							<Image style={styles.thumbnailStyle} source={fb}/>

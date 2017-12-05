@@ -1,0 +1,51 @@
+/api/user/:user_id
+{                                             
+    profile: String,
+    first: String,
+    last: String,
+    email: String
+}       
+
+POST /api/post
+{
+    user_id: String
+    tags: {name: String}
+    image_url: String           
+}
+
+GET /api/post
+{
+    [
+        image_url: String
+        owner: {
+            first: String,
+            last: String,
+            profile: String,
+            user_id: String,
+            posts: [
+                String
+            ]
+        },        
+        tags: [
+            {
+                name: String
+                _id: String
+            }
+        ],
+        raters: [
+            _id: String
+        ],
+        rated_by_me: Boolean        
+    ]
+}
+
+POST /api/post/rate/:post_id
+{
+    rating: Number
+    user_id: String
+}
+
+{
+    success: Boolean
+    data: Post
+}

@@ -8,24 +8,40 @@ TouchableHighlight,
 TouchableOpacity,
 View
 } from 'react-native';
+import { Actions } from 'react-native-router-flux'
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import Camera from 'react-native-camera';
 import CameraRollPicker from 'react-native-camera-roll-picker';
-import CustomScrollTab from '../reusables/customScrollTab'
+import CustomScrollTab from '../../reusables/customScrollTab';
 var width = Dimensions.get('window').width;
 
 class Upload extends Component {
 	constructor(props) {
         super(props);		
 				
-        this.getSelectedImages = this.getSelectedImages.bind(this)
+		this.getSelectedImages = this.getSelectedImages.bind(this)
+		this.takePicture = this.takePicture.bind(this)
 	}
 
-	getSelectedImages() {
+	takePicture() {
+		const options = {};		
+		this.camera.capture({metadata: options})
+		.then((data) => {
+			Actions.uploadSelected({image:data.mediaUri})
+		})
+		.catch(err => console.error(err));
+	}
 
+	getSelectedImages(selectedImage) {			
+		if (selectedImage.length != 0) {
+			Actions.uploadSelected({
+				image:selectedImage[0].uri				
+			})						
+		}		
 	}
 
 	render() {
+		console.log('User!', this.props.self)
 		return (
 			<View style={styles.container}>
 				<ScrollableTabView
@@ -44,26 +60,20 @@ class Upload extends Component {
 							}}
 							style={styles.preview}
 							aspect={Camera.constants.Aspect.fill}>
-						<TouchableOpacity style={styles.capture} onPress={this.takePicture.bind(this)}/>
+						<TouchableOpacity style={styles.capture} onPress={this.takePicture}/>
 						</Camera>
 					</View>		
-					<View tabLabel='Album' style={styles.mainView}>
+					<View tabLabel='Album' style={styles.mainView}>					
 						<CameraRollPicker
 							callback={this.getSelectedImages} 
 							imageMargin={0}
+							selectSingleItem={true}
+							backgroundColor='white'
 						/>
 					</View>					
 				</ScrollableTabView>								
 			</View>
 		);
-	}
-
-	takePicture() {
-		const options = {};
-		// options.location = ...
-		this.camera.capture({metadata: options})
-		.then((data) => console.log(data))
-		.catch(err => console.error(err));
 	}
 }
 

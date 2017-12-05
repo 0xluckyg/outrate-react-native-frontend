@@ -9,7 +9,6 @@ import {
     ImageBackground,
     Image
 } from 'react-native';
-import { connect } from 'react-redux';
 import {
 	mock1,
 	mock2,
@@ -31,7 +30,16 @@ const mockData = [
             image: mock1
         },
         tags: [
-            "tag1", "tag2", "tagLong3", "tag4", "tag5", "tag6", "tagLong7", "tagLong8", "tag9", "tagLong10"
+            {name: 'tag1'},
+            {name: 'tag2'},
+            {name: 'tag3'},
+            {name: 'tag4'},
+            {name: 'tag5'},
+            {name: 'tag6'},
+            {name: 'tag7'},
+            {name: 'tag8'},
+            {name: 'tag9'},
+            {name: 'tag10'}
         ]
     },
     {
@@ -47,7 +55,16 @@ const mockData = [
             image: mock2
         },
         tags: [
-            "tag1", "tag2", "tagLong3", "tag4", "tag5", "tag6", "tagLong7", "tagLong8", "tag9", "tagLong10"
+            {name: 'tag1'},
+            {name: 'tag2'},
+            {name: 'tag3'},
+            {name: 'tag4'},
+            {name: 'tag5'},
+            {name: 'tag6'},
+            {name: 'tag7'},
+            {name: 'tag8'},
+            {name: 'tag9'},
+            {name: 'tag10'}
         ]
     },
     {
@@ -63,7 +80,16 @@ const mockData = [
             image: mock3
         },
         tags: [
-            "tag1", "tag2", "tagLong3", "tag4", "tag5", "tag6", "tagLong7", "tagLong8", "tag9", "tagLong10"
+            {name: 'tag1'},
+            {name: 'tag2'},
+            {name: 'tag3'},
+            {name: 'tag4'},
+            {name: 'tag5'},
+            {name: 'tag6'},
+            {name: 'tag7'},
+            {name: 'tag8'},
+            {name: 'tag9'},
+            {name: 'tag10'}
         ]
     }
 ]
@@ -74,17 +100,16 @@ class List extends Component {
         super(props);		
 				        
     }
-    
+
     render() {
         return (
             <View style={styles.mainView}>
                 <FlatList                                   
-                    data={mockData}
+                    data={this.props.data}
                     renderItem={({item}) => {                             
                         return <Post 
                             data={item}
-                            ratable={false}
-                            goToOnPress={Actions.post}
+                            ratable={true}                            
                         />
                     }}        
                     keyExtractor={(item, index) => index}                    
