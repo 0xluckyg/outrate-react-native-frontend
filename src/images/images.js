@@ -9,6 +9,7 @@ const minus = require('./other/minus.png');
 const plus = require('./other/plus.png');
 const search = require('./other/search.png');
 const share = require('./other/share.png');
+const check = require('./other/check.png')
 
 //auth
 const fb = require('./auth/fb.png');
@@ -40,6 +41,8 @@ module.exports = {
     main1,
 
     circle,
+
+    check,
 
     camera,
     cameraSelected,

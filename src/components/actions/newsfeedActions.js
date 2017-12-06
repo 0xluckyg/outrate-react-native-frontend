@@ -6,23 +6,21 @@ import {store} from '../../store'
 import { Actions } from 'react-native-router-flux'
 // import {store} from '../../store'
 
-export const getRecentPosts = (uri, user_id, tags) => {
+export const getRecentPosts = () => {
     return dispatch => {                        
         axios.get(LOCAL_SERVER+'/post').then(res => {                                        
             if (res.data.success) {
-                dispatch(resolveGetRecentPosts(res.data.data))
-                console.log('gotit',res)
+                dispatch(resolveGetRecentPosts(res.data.data))                
             }            
         })
     }
 }
 
-export const getTrendingPosts = (uri, user_id, tags) => {
+export const getTrendingPosts = () => {
     return dispatch => {                        
         axios.get(LOCAL_SERVER+'/post').then(res => {                        
             if (res.data.success) {
-                dispatch(resolveGetTrendingPosts(res.data.data))
-                console.log('gotit',res)
+                dispatch(resolveGetTrendingPosts(res.data.data))                
             }            
         })
     }

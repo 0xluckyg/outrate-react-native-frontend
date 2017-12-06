@@ -31,7 +31,7 @@ class Auth extends Component {
 				style={styles.backgroundImage}				
 			>
 				<View style={styles.overlay}>
-						<FBLogin />
+						{/* <FBLogin /> */}
 						<Text style={styles.appLogo}>
 							FASH
 						</Text>

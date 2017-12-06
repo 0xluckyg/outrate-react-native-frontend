@@ -2,7 +2,7 @@ import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 import {SET_SELF, SERVER, LOCAL_SERVER} from '../../helper/constants'
 import {store} from '../../store'
-// import * as indicatorActions from './indicatorActions';
+import * as indicatorActions from './indicatorActions';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
 import { Actions } from 'react-native-router-flux'
 const FB_PHOTO_WIDTH = 400;
@@ -27,6 +27,7 @@ export const facebookAuth = (userInfo) => {
                         axios.post(LOCAL_SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                            
                             if (res.data.success) {                                
                                 Actions.tab()
+                                store.dispatch(indicatorActions.showToast(true))                                
                                 dispatch(resolveAuth({...cleanInfo,...{user_id:info.data.id}}))                                
                             } else {
                                 console.log(res.data.message)

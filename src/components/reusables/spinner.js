@@ -7,7 +7,7 @@ import {
     Easing
 } from 'react-native';
 
-import * as indicatorActions from '../../actions/indicatorActions';
+import * as indicatorActions from '../actions/indicatorActions';
 import { connect } from 'react-redux';
 
 class Spinner extends Component {

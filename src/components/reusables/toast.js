@@ -9,9 +9,9 @@ import {
     Image,
     TouchableWithoutFeedback
 } from 'react-native';
-import {CheckmarkImage} from '../../images/images'
-
-import * as indicatorActions from '../../actions/indicatorActions';
+import {check} from '../../images/images'
+import {AppColors} from '../../helper/style'
+import * as indicatorActions from '../actions/indicatorActions';
 import { connect } from 'react-redux';
 
 const window = Dimensions.get('window');
@@ -68,7 +68,7 @@ class Toast extends Component {
         } else {
             return (
                 <View style={[styles.toast, styles.circleToast]}>
-                    <Image style={styles.checkMark} source={CheckmarkImage}></Image>
+                    <Image style={styles.checkMark} source={check}></Image>
                 </View>
             )
         }
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     circleToast: {        
         width: 70,
         height: 70,
-
+        backgroundColor: AppColors.main,
         borderRadius: 35        
     }, 
     checkMark: {

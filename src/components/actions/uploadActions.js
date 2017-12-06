@@ -2,7 +2,8 @@ import axios from 'axios';
 import {AsyncStorage} from 'react-native';
 import {SET_SELF, SERVER, LOCAL_SERVER, UPLOAD_POST} from '../../helper/constants'
 import {store} from '../../store'
-// import * as indicatorActions from './indicatorActions';
+import * as indicatorActions from './indicatorActions';
+import * as newsfeedActions from './newsfeedActions';
 import { Actions } from 'react-native-router-flux'
 import { RNS3 } from 'react-native-aws3';
 
@@ -37,7 +38,9 @@ export const uploadPost = (uri, user_id, tags) => {
                 if (res.data.success) {                    
                     console.log('uploadsuccess', res)
                     Actions.pop()                    
-                    
+                    store.dispatch(newsfeedActions.getRecentPosts());
+                    store.dispatch(newsfeedActions.getTrendingPosts());
+                    store.dispatch(indicatorActions.showToast(true))                                
                     dispatch(resolveUploadPost(true))                                
                 } else {
                     console.log(res.data.message)

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Router from './components/routes';
 
-// import Spinner from './components/reusables/spinner';
-// import Toast from './components/reusables/toast';
+import Spinner from './components/reusables/spinner';
+import Toast from './components/reusables/toast';
 
 class Main extends Component {
     constructor() {
@@ -13,8 +13,8 @@ class Main extends Component {
     render() {        
         return (            
             <View style={styles.mainView}>                                
-                {/* <Toast/>
-                <Spinner/> */}
+                <Toast/>
+                <Spinner/>
                 <Router/>
             </View>            
         );
