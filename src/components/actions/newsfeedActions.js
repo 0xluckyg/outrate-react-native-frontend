@@ -8,9 +8,9 @@ import { Actions } from 'react-native-router-flux'
 
 export const getRecentPosts = (uri, user_id, tags) => {
     return dispatch => {                        
-        axios.get(LOCAL_SERVER+'/post').then(res => {                            
-            resolveGetRecentPosts(res.data)
+        axios.get(LOCAL_SERVER+'/post').then(res => {                                        
             if (res.data.success) {
+                dispatch(resolveGetRecentPosts(res.data.data))
                 console.log('gotit',res)
             }            
         })
@@ -19,9 +19,9 @@ export const getRecentPosts = (uri, user_id, tags) => {
 
 export const getTrendingPosts = (uri, user_id, tags) => {
     return dispatch => {                        
-        axios.get(LOCAL_SERVER+'/post').then(res => {            
-            resolveGetTrendingPosts(res.data)
+        axios.get(LOCAL_SERVER+'/post').then(res => {                        
             if (res.data.success) {
+                dispatch(resolveGetTrendingPosts(res.data.data))
                 console.log('gotit',res)
             }            
         })

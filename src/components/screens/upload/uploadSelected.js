@@ -60,13 +60,14 @@ class UploadSelected extends Component {
         return false
     }
     
-    render() {        
+    render() {  
+        console.log('onRender', this.state.currentTag)
         return (
             <KeyboardAvoidingView 
                 behavior='padding'            
                 style={styles.mainView}                
             >     
-                {/* <Header headerText='Ready to go!'/>                 */}
+                <Header headerText='Ready to go!'/>                
                 <TouchableWithoutFeedback 
                     style={styles.mainView}
                     onPress={Keyboard.dismiss}
@@ -90,19 +91,22 @@ class UploadSelected extends Component {
                         </ImageBackground>                                            
                     </View>
                     <TextInput
+                        ref={component => this._textInput = component}                              
                         placeholder='Enter a tag! Maybe a brand?'
                         value={this.state.currentTag}
                         style={styles.tagInput}
                         onChangeText={currentTag => {
+                            console.log('textChangeCalled', this.state.currentTag)
                             this.setState({currentTag})
                         }}
-                        onSubmitEditing={() => {
+                        onSubmitEditing={(event) => {                            
                             tags = this.state.tags
-                            if (!this.tagExists(this.state.currentTag)){
-                                tags.push({name:this.state.currentTag})                            
-                            }                            
-                            this.setState({tags})                            
-                            this.setState({currentTag: ''})
+                            if (!this.tagExists(this.state.currentTag)){                                
+                                tags.push({name:event.nativeEvent.text})                                
+                                this.setState({tags})
+                                this._textInput.setNativeProps({text: ''});                                
+                            }                                          
+                            event.nativeEvent.text = ''                                          
                         }}
                         value={this.state.text}
                     />

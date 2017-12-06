@@ -5,14 +5,17 @@ const initialState = {
     trendingPosts: []
 }
 
-export default function (state = initialState, action) {        
+export default function (state = initialState, action) { 
+    console.log('where?!', action)       
     switch (action.type) {
         case GET_RECENT_POSTS:            
-            return {                
+            return {        
+                ...state,        
                 recentPosts: action.posts
             }   
         case GET_TRENDING_POSTS:            
-            return {                
+            return {           
+                ...state,     
                 trendingPosts: action.posts
             }   
         default:

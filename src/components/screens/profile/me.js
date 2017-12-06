@@ -30,9 +30,11 @@ class Me extends Component {
             <View style={styles.mainView}>
                 <Lightbox>
                 <View style={styles.imageView}>
-                    <Image style={styles.image} source={mock1}></Image>
+                    <Image style={styles.image} source={{uri:this.props.profile.profile}}></Image>
                     <View style={styles.imageFooter}>
-                        <Text style={styles.name}>Name1 Name2</Text>
+                        <Text style={styles.name}>{
+                            `${this.props.profile.first} ${this.props.profile.last}`
+                        }</Text>
                     </View>                    
                 </View>
                 </Lightbox>
@@ -101,4 +103,10 @@ const styles = StyleSheet.create({
     }   
 });
 
-export default Me
+const mapStateToProps = (state) => (
+	{
+        profile: state.profile.self,        
+	}
+)
+
+export default connect(mapStateToProps, null)(Me);

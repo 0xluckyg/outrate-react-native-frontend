@@ -36,7 +36,8 @@ export const uploadPost = (uri, user_id, tags) => {
             axios.post(LOCAL_SERVER+'/post', data).then(res => {                
                 if (res.data.success) {                    
                     console.log('uploadsuccess', res)
-                    Actions.pop()
+                    Actions.pop()                    
+                    
                     dispatch(resolveUploadPost(true))                                
                 } else {
                     console.log(res.data.message)

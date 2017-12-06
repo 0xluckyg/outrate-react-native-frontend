@@ -8,7 +8,8 @@ import {
     FlatList,
     ImageBackground,
     PanResponder,
-    Animated
+    Animated,
+    TouchableWithoutFeedback
 } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 import {
@@ -25,55 +26,62 @@ class Post extends Component {
         super(props);		
 				
         this.state = {
-            value: 50,            
-            isMoving: false
+            value: 50,                        
+            isTapped: false
         };
 
-        this.isMoving = this.isMoving.bind(this)
+        this.isRating = this.isRating.bind(this)
         this.calculateValue = this.calculateValue.bind(this)
     }
 
     calculateValue(movement) {        
-        rangeTop = width * 0.7 + (width*0.15)
-        rangeBottom = width * 0.15
-        middle = width * 0.5
-        unit = Math.round(width * 0.7 / 100)
-        
-        // if (position > 0) {
-        //     this.setState({value:this.state.value+unit})
-        // } else {
-        //     this.setState({value:this.state.value-unit})
-        // }
+        rangeBottom = width * 0.2
+        rangeTop = width * 0.6 + (width*0.2)        
+        rangeMax = rangeTop - rangeBottom                
+        position = Math.round((movement - rangeBottom) * (100/rangeMax))        
+        if (position < 0) {
+            position = 0
+        }
+        if (position > 100) {
+            position = 100
+        }
+        this.setState({value:position})
     }
     
     componentWillMount() {
         if (this.props.ratable) {
             this._panResponder = PanResponder.create({
                 onMoveShouldSetResponderCapture: () => true,
-                onMoveShouldSetPanResponderCapture: () => true,
+                onMoveShouldSetPanResponderCapture: () => true,                    
             
-                onPanResponderGrant: (e, gestureState) => {
-                    console.log('Grant',gestureState);
-                    this.setState({isMoving: true})
-                },
-            
-                onPanResponderMove: (e, gestureState) => {                                        
-                    console.log('gs', gestureState.moveX)
-                    this.calculateValue(gestureState.moveX)
+                onPanResponderMove: (e, gestureState) => {                       
+                    if (this.state.isTapped) {
+                        this.calculateValue(gestureState.moveX)
+                        this.props.scroll(false)
+                    }                                  
                 },
                 
                 onPanResponderRelease: (e, gestureState) => {
-                    console.log('Release',gestureState);
-                    this.setState({isMoving: false, value: 50})                                        
-                }                
+                    if (this.state.isTapped) {
+                        this.setState({isTapped: false})                                        
+                        this.props.scroll(true)
+                    }                    
+                },     
+                
+                onPanResponderTerminate: (e, gestureState) => {
+                    if (this.state.isTapped) {
+                        this.setState({isTapped: false})                                        
+                        this.props.scroll(true)
+                    }                    
+                }     
             });
         } else {
             this._panResponder = ''
         }
     }      
 
-    isMoving() {
-        if (!this.state.isMoving) {
+    isRating() {
+        if (!this.state.isTapped) {
             return (
                 <View style={styles.imageFooter}>
                     <Text style={styles.ratingFooterText}>58</Text>
@@ -95,21 +103,32 @@ class Post extends Component {
             <View style={styles.mainView}>
                 <Cell 
                     height={60}
-                    data={this.props.data.header}
+                    data={this.props.data.owner}
                     buttons={[
                         { image: plus, text: 'Follow' },
                         { image: share, text: 'Share' }
                     ]}
                 />
                 <View {...this._panResponder.panHandlers}>                    
+                    <TouchableWithoutFeedback
+                            onPress={() => {
+                                console.log('why no tap')
+                                if (!this.state.isTapped) {
+                                    this.setState({isTapped:true})
+                                } else {
+                                    this.setState({isTapped:false})
+                                }
+                            }}
+                    >
                     <View
                         style={styles.imageView}                        
                         activeOpacity={1}
                     >
-                        <ImageBackground style={styles.image} source={this.props.data.image.image}>
-                            {this.isMoving()}                  
-                        </ImageBackground>                    
+                            <ImageBackground style={styles.image} source={{uri:this.props.data.image_url}}>
+                                {this.isRating()}                  
+                            </ImageBackground>                          
                     </View>                    
+                    </TouchableWithoutFeedback>                  
                 </View>
                 <Tags tags={this.props.data.tags}/>            
             </View>

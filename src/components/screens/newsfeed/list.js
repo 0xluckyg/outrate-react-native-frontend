@@ -98,18 +98,27 @@ import { Actions } from 'react-native-router-flux';
 class List extends Component {
     constructor(props) {
         super(props);		
-				        
+
+        this.state = {
+            scrollEnabled: true
+        }				        
     }
 
     render() {
+        console.log('thspor', this.props.data)
         return (
             <View style={styles.mainView}>
-                <FlatList                                   
+                <FlatList                   
+                    scrollEnabled={this.state.scrollEnabled}                
                     data={this.props.data}
                     renderItem={({item}) => {                             
+                        console.log('wheremyitme', item)
                         return <Post 
                             data={item}
-                            ratable={true}                            
+                            ratable={true}   
+                            scroll={(bool) => {
+                                this.setState({scrollEnabled:bool})
+                            }}                         
                         />
                     }}        
                     keyExtractor={(item, index) => index}                    

@@ -24,16 +24,23 @@ const Tag = (tag) => {
 
 class Tags extends Component {
     constructor(props) {
-        super(props);		        
+        super(props);	
+        this.returnTag = this.returnTag.bind(this)	        
+    }
+
+    returnTag() {
+        let counter = 0
+        return this.props.tags.map(tag => {
+            counter++
+            return ( <Tag key={counter} tag={tag.name}/> )
+        })
     }
     
     render() {
         return (
 			<View style={styles.mainView}>                
                 {
-                    this.props.tags.map(tag => {
-                        return ( <Tag key={tag.name} tag={tag.name}/> )
-                    })
+                    this.returnTag()
                 }
             </View>
         );

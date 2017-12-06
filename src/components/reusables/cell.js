@@ -70,11 +70,11 @@ class Cell extends Component {
                             width: this.props.height * (2/3),
                             height: this.props.height * (2/3),                    
                             borderRadius: this.props.height * (1/3),
-                        }} source={this.props.data.image}/>
+                        }} source={{uri:this.props.data.profile}}/>
                     </View>
                     <View style={styles.rowContentStyle}>
                         <View>
-                            <Text style={styles.topTextStyle}>{this.props.data.name.first + " " + this.props.data.name.last}</Text>
+                            <Text style={styles.topTextStyle}>{this.props.data.first + " " + this.props.data.last}</Text>
                         </View>                        
                     </View>
                     {this.renderButtons()}

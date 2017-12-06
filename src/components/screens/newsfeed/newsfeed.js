@@ -28,7 +28,8 @@ class Newsfeed extends Component {
     }
     
     render() {
-        return (
+		console.log('DATA', this.props.recentPosts)
+        return (		
 			<View style={styles.mainView}>
 				<ScrollableTabView
 				style={{marginTop:20}}
