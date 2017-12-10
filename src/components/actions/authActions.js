@@ -4,7 +4,6 @@ import {SET_SELF, SERVER, LOCAL_SERVER} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
-import { Actions } from 'react-native-router-flux'
 const FB_PHOTO_WIDTH = 400;
 
 export const facebookAuth = (userInfo) => {    
@@ -25,8 +24,8 @@ export const facebookAuth = (userInfo) => {
                             email: info.data.email
                         }                                             
                         axios.post(LOCAL_SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                            
-                            if (res.data.success) {                                
-                                Actions.tab()
+                            console.log('auth', res)
+                            if (res.data.success) {                                                                
                                 store.dispatch(indicatorActions.showToast(true))                                
                                 dispatch(resolveAuth({...cleanInfo,...{user_id:info.data.id}}))                                
                             } else {

@@ -40,8 +40,7 @@ class Upload extends Component {
 		}		
 	}
 
-	render() {
-		console.log('User!', this.props.self)
+	render() {		
 		return (
 			<View style={styles.container}>
 				<ScrollableTabView

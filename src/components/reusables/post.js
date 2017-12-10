@@ -18,6 +18,8 @@ import {
 } from '../../images/images';
 import Cell from './cell'
 import Tags from './tags'
+import { connect } from 'react-redux';
+import * as newsfeedActions from '../actions/newsfeedActions';
 
 var width = Dimensions.get('window').width;
 
@@ -65,13 +67,14 @@ class Post extends Component {
                     if (this.state.isTapped) {
                         this.setState({isTapped: false})                                        
                         this.props.scroll(true)
+                        this.props.ratePost(this.props.data._id, this.state.value)
                     }                    
                 },     
                 
                 onPanResponderTerminate: (e, gestureState) => {
                     if (this.state.isTapped) {
-                        this.setState({isTapped: false})                                        
-                        this.props.scroll(true)
+                        this.setState({isTapped: false})
+                        this.props.scroll(true)                        
                     }                    
                 }     
             });
@@ -99,6 +102,7 @@ class Post extends Component {
     }
 
     render() {
+        // console.log('POST',this.props.data)
         return (
             <View style={styles.mainView}>
                 <Cell 
@@ -111,8 +115,7 @@ class Post extends Component {
                 />
                 <View {...this._panResponder.panHandlers}>                    
                     <TouchableWithoutFeedback
-                            onPress={() => {
-                                console.log('why no tap')
+                            onPress={() => {                                
                                 if (!this.state.isTapped) {
                                     this.setState({isTapped:true})
                                 } else {
@@ -191,4 +194,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Post
+export default connect(null, newsfeedActions)(Post)

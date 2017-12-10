@@ -104,15 +104,13 @@ class List extends Component {
         }				        
     }
 
-    render() {
-        console.log('thspor', this.props.data)
+    render() {        
         return (
             <View style={styles.mainView}>
                 <FlatList                   
                     scrollEnabled={this.state.scrollEnabled}                
                     data={this.props.data}
-                    renderItem={({item}) => {                             
-                        console.log('wheremyitme', item)
+                    renderItem={({item}) => {                                                     
                         return <Post 
                             data={item}
                             ratable={true}   

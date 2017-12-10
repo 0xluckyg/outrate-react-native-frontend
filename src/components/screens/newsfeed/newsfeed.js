@@ -23,12 +23,11 @@ class Newsfeed extends Component {
 	}
 	
 	componentWillMount() {
-		this.props.getRecentPosts()        
-		this.props.getTrendingPosts()      
+		this.props.getRecentPosts(this.props.recentPosts.length)
+		this.props.getTrendingPosts(this.props.trendingPosts.length)      
     }
     
-    render() {
-		console.log('DATA', this.props.recentPosts)
+    render() {		
         return (		
 			<View style={styles.mainView}>
 				<ScrollableTabView

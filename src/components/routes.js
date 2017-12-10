@@ -35,8 +35,7 @@ const TabIcon = ({focused, title}) => {
             tabBarImage = profile; selectedTabBarImage = profileSelected; break;        
     }
 
-    if (focused) {
-        console.log('selected')
+    if (focused) {        
         return <Image style={styles.tabImageSelected} source={selectedTabBarImage}/>
     }
     return <Image style={styles.tabImage} source={tabBarImage}/>

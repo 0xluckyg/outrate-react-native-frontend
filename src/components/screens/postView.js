@@ -34,8 +34,7 @@ class PostView extends Component {
         
     }
     
-    render() {
-        console.log('data2',this.props.data)
+    render() {        
         return (
 			<View style={styles.mainView}>     
                 <Header headerText='Swipe to rate!'/>                

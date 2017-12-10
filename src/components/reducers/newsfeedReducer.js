@@ -1,12 +1,15 @@
-import {GET_TRENDING_POSTS, GET_RECENT_POSTS } from '../../helper/constants'
+import {GET_TRENDING_POSTS, GET_RECENT_POSTS, RATE } from '../../helper/constants'
 
 const initialState = {
     recentPosts: [],
     trendingPosts: []
 }
 
-export default function (state = initialState, action) { 
-    console.log('where?!', action)       
+function changeRating(state) {
+    
+}
+
+export default function (state = initialState, action) {     
     switch (action.type) {
         case GET_RECENT_POSTS:            
             return {        
@@ -18,6 +21,10 @@ export default function (state = initialState, action) {
                 ...state,     
                 trendingPosts: action.posts
             }   
+        case RATE:
+            return {
+                ...state
+            }
         default:
             return state
     }

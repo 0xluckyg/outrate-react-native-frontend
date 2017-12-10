@@ -51,17 +51,14 @@ class UploadSelected extends Component {
 
     tagExists(check) {
         this.state.tags.map(tag => {            
-            if (tag.name.localeCompare(check)) {                
-                console.log('ch',tag)            
-                console.log('check',check)
+            if (tag.name.localeCompare(check)) {                                
                 return true
             }
         })
         return false
     }
     
-    render() {  
-        console.log('onRender', this.state.currentTag)
+    render() {          
         return (
             <KeyboardAvoidingView 
                 behavior='padding'            
@@ -95,8 +92,7 @@ class UploadSelected extends Component {
                         placeholder='Enter a tag! Maybe a brand?'
                         value={this.state.currentTag}
                         style={styles.tagInput}
-                        onChangeText={currentTag => {
-                            console.log('textChangeCalled', this.state.currentTag)
+                        onChangeText={currentTag => {                            
                             this.setState({currentTag})
                         }}
                         onSubmitEditing={(event) => {                            

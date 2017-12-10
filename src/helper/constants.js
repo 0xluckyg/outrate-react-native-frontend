@@ -12,3 +12,4 @@ export const UPLOAD_POST = "UPLOAD_POST"
 
 export const GET_RECENT_POSTS = "GET_RECENT_POSTS"
 export const GET_TRENDING_POSTS = "GET_TRENDING_POSTS"
+export const RATE = "RATE"

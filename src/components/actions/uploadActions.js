@@ -35,8 +35,7 @@ export const uploadPost = (uri, user_id, tags) => {
                 image_url: response.body.postResponse.location
             }                        
             axios.post(LOCAL_SERVER+'/post', data).then(res => {                
-                if (res.data.success) {                    
-                    console.log('uploadsuccess', res)
+                if (res.data.success) {                                        
                     Actions.pop()                    
                     store.dispatch(newsfeedActions.getRecentPosts());
                     store.dispatch(newsfeedActions.getTrendingPosts());
