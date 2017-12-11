@@ -92,8 +92,7 @@ class Follows extends Component {
         this.props.getUser()
     }
 
-    getData() {
-        console.log('what',this.props.profile.following)
+    getData() {        
         if (this.props.type === 'followers') {                    
             return this.props.profile.my_followers
         } else {            
@@ -101,8 +100,7 @@ class Follows extends Component {
         }        
     }
 
-    renderFollow(data) {    
-        console.log('what?!', data)
+    renderFollow(data) {            
         return (        
             <Cell 
                 height={60}

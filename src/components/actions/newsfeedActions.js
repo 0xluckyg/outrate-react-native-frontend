@@ -29,8 +29,7 @@ export const getTrendingPosts = (skip) => {
     }
 }
 
-export const ratePost = (post_id, value) => {
-    console.log('RATE CALL')
+export const ratePost = (post_id, value) => {    
     return dispatch => {
         axios.post(LOCAL_SERVER+'/post/rate/'+post_id, {
             rating: value,
@@ -38,8 +37,9 @@ export const ratePost = (post_id, value) => {
         }).then(res => {
             console.log('rateSuccess',res)
             if (res.data.success) {
+                console.log('rate done',res.data)
                 store.dispatch(indicatorActions.showToast(true))                                
-                dispatch(resolveRating(post_id, value))
+                dispatch(resolveRating(res.data.data))
             }  else {
                 console.log('rate error',res.data.message);
             }
@@ -61,9 +61,9 @@ export const resolveGetTrendingPosts = (posts) => {
     }
 }
 
-export const resolveRating = (post_id, value) => {
+export const resolveRating = (newPost) => {
     return {
         type: RATE,
-        post: post_id        
+        newPost: newPost
     }
 }

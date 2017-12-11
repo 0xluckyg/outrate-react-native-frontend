@@ -52,6 +52,11 @@ class Post extends Component {
     }
     
     componentWillMount() {
+        let rating = this.props.data.rating
+        if (rating) {
+            this.setState({value:rating})
+        }
+
         if (this.props.ratable) {
             this._panResponder = PanResponder.create({
                 onMoveShouldSetResponderCapture: () => true,
@@ -84,26 +89,35 @@ class Post extends Component {
         }
     }      
 
-    isRating() {
-        if (!this.state.isTapped) {
-            return (
-                <View style={styles.imageFooter}>
-                    <Text style={styles.ratingFooterText}>58</Text>
-                    <Text style={styles.ratedByFooterText}>RATED BY 1880</Text>
-                </View>
-            )
-        } else {
+    isRating() {                
+        console.log('newsfeed? ',this.props.data.rating)
+        let rating = this.props.data.rating || 50
+        let raters = this.props.data.raters.length        
+
+        if (this.state.isTapped) {
             return (
                 <View style={styles.ratingView}>
                     <Text style={styles.ratingText}>{this.state.value}</Text>
-                    <Text style={styles.ratedByText}>RATED BY 1880</Text>
+                    <Text style={styles.ratedByText}>{`Rated by ${raters}`}</Text>
                 </View>
             )
         }
+
+        if (!this.props.data.rating) {                  
+            return
+        }
+
+        if (!this.state.isTapped) {
+            return (
+                <View style={styles.imageFooter}>
+                    <Text style={styles.ratingFooterText}>{rating}</Text>
+                    <Text style={styles.ratedByFooterText}>{`Rated by ${raters}`}</Text>
+                </View>
+            )
+        }         
     }
 
-    render() {
-        // console.log('POST',this.props.data)
+    render() {                
         return (
             <View style={styles.mainView}>
                 <Cell 

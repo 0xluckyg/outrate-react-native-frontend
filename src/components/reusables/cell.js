@@ -52,8 +52,7 @@ class Cell extends Component {
         )        
     }
 
-    render() {        
-        console.log('cell not work',this.props.data)
+    render() {                
         return (            
                 <View style={{
                     flexDirection: 'row',
