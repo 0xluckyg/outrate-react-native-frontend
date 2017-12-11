@@ -8,9 +8,7 @@ const initialState = {
 
 export default function (state = initialState, action) {            
     switch (action.type) {
-        case SET_SELF:            
-            console.log('self', action)
-            Actions.tab()   
+        case SET_SELF:                                    
             state.self = action.self                             
             return state      
         default:

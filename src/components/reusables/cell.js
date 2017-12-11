@@ -35,6 +35,7 @@ class Cell extends Component {
                                 marginRight: 6                           
                             }}
                             key={index}
+                            onPress={button.onPress}
                         >
                             <Image style={{                                
                                 tintColor: '#000',
@@ -52,6 +53,7 @@ class Cell extends Component {
     }
 
     render() {        
+        console.log('cell not work',this.props.data)
         return (            
                 <View style={{
                     flexDirection: 'row',

@@ -17,6 +17,7 @@ import {
 } from '../../../images/images';
 import Cell from '../../reusables/cell'
 import Tags from '../../reusables/tags'
+import * as profileActions from '../../actions/profileActions';
 
 var width = Dimensions.get('window').width;
 
@@ -79,31 +80,52 @@ const mockData = [
     }
 ]
 
-const Post = ({data}) => {    
-    return (        
-        <Cell 
-            height={60}
-            data={data}
-            buttons={[
-                { image: minus },                
-            ]}
-        />                    
-    );
-}
-
 class Follows extends Component {
     constructor(props) {
         super(props);		
-				        
+                        
+        this.getData = this.getData.bind(this)
+        this.renderFollow = this.renderFollow.bind(this)
+    }
+
+    componentWillMount() {
+        this.props.getUser()
+    }
+
+    getData() {
+        console.log('what',this.props.profile.following)
+        if (this.props.type === 'followers') {                    
+            return this.props.profile.my_followers
+        } else {            
+            return this.props.profile.following
+        }        
+    }
+
+    renderFollow(data) {    
+        console.log('what?!', data)
+        return (        
+            <Cell 
+                height={60}
+                data={data}
+                buttons={[
+                    { 
+                        image: minus, 
+                        onPress: () => {
+                            this.props.unfollowUser(data.user_id)
+                        }
+                    },                
+                ]}
+            />                    
+        );
     }
     
-    render() {
+    render() {        
         return (
             <View style={styles.mainView}>
                 <FlatList                                   
-                    data={mockData}
+                    data={this.getData()}
                     renderItem={({item}) => {                        
-                        return <Post data={item}/>
+                        return this.renderFollow(item)
                     }}        
                     keyExtractor={(item, index) => index}                    
                 />
@@ -129,4 +151,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Follows
+const mapStateToProps = (state) => (
+	{
+        profile: state.profile.self,        
+	}
+)
+
+export default connect(mapStateToProps, profileActions)(Follows)

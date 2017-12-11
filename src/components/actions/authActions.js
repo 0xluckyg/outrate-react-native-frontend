@@ -4,6 +4,7 @@ import {SET_SELF, SERVER, LOCAL_SERVER} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
+import { Actions } from 'react-native-router-flux'
 const FB_PHOTO_WIDTH = 400;
 
 export const facebookAuth = (userInfo) => {    
@@ -14,8 +15,8 @@ export const facebookAuth = (userInfo) => {
                 var picture = `https://graph.facebook.com/v2.3/${user.userId}/picture?width=${FB_PHOTO_WIDTH}&redirect=false&access_token=${user.token}`;
                 var userInfo = `https://graph.facebook.com/v2.3/${user.userId}?fields=name,email&access_token=${user.token}`;
                 
-                axios.get(picture).then(pic => {
-                    axios.get(userInfo).then(info => {                                                
+                axios.get(picture).then(pic => {                    
+                    axios.get(userInfo).then(info => {                                                                                                
                         firstLastName = firstLastName(info.data.name)
                         cleanInfo = {                                             
                             profile: pic.data.data.url,
@@ -27,6 +28,7 @@ export const facebookAuth = (userInfo) => {
                             console.log('auth', res)
                             if (res.data.success) {                                                                
                                 store.dispatch(indicatorActions.showToast(true))                                
+                                Actions.tab()   
                                 dispatch(resolveAuth({...cleanInfo,...{user_id:info.data.id}}))                                
                             } else {
                                 console.log(res.data.message)
@@ -42,7 +44,7 @@ export const facebookAuth = (userInfo) => {
     }
 }
 
-function firstLastName(name) {
+function firstLastName(name) {    
     if (name.indexOf(' ') >= 0) {
         name = name.split(' ')
     }

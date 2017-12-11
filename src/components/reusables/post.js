@@ -20,6 +20,7 @@ import Cell from './cell'
 import Tags from './tags'
 import { connect } from 'react-redux';
 import * as newsfeedActions from '../actions/newsfeedActions';
+import * as profileActions from '../actions/profileActions';
 
 var width = Dimensions.get('window').width;
 
@@ -109,7 +110,13 @@ class Post extends Component {
                     height={60}
                     data={this.props.data.owner}
                     buttons={[
-                        { image: plus, text: 'Follow' },
+                        {   
+                            image: plus, 
+                            text: 'Follow',
+                            onPress: () => {
+                                this.props.followUser(this.props.data.owner.user_id)
+                            }
+                        },
                         { image: share, text: 'Share' }
                     ]}
                 />
@@ -194,4 +201,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, newsfeedActions)(Post)
+export default connect(null, {...newsfeedActions,...profileActions})(Post)

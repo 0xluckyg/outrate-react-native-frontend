@@ -43,10 +43,14 @@ class Profile extends Component {
 						<Me/>
 					</View>
 					<View tabLabel='Followers' style={styles.mainView}>						
-						<Follows/>
+						<Follows
+							type='followers'
+						/>
 					</View>
 					<View tabLabel="Following" style={styles.mainView}>            	            										
-						<Follows/>
+						<Follows
+							type='following'
+						/>
 					</View>					
 				</ScrollableTabView>
 			</View>
