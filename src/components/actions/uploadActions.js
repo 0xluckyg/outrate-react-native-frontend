@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
-import {SET_SELF, SERVER, LOCAL_SERVER, UPLOAD_POST} from '../../helper/constants'
+import {SET_SELF, SERVER, UPLOAD_POST, GET_TAGS} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import * as newsfeedActions from './newsfeedActions';
+import * as profileActions from './profileActions';
 import { Actions } from 'react-native-router-flux'
 import { RNS3 } from 'react-native-aws3';
 
@@ -34,11 +35,12 @@ export const uploadPost = (uri, user_id, tags) => {
                 tags: tags,
                 image_url: response.body.postResponse.location
             }                        
-            axios.post(LOCAL_SERVER+'/post', data).then(res => {                
+            axios.post(SERVER+'/post', data).then(res => {                
                 if (res.data.success) {                                        
                     Actions.pop()                    
                     store.dispatch(newsfeedActions.getRecentPosts());
                     store.dispatch(newsfeedActions.getTrendingPosts());
+                    store.dispatch(profileActions.getUserPosts());
                     store.dispatch(indicatorActions.showToast(true))                                
                     dispatch(resolveUploadPost(true))                                
                 } else {
@@ -49,9 +51,26 @@ export const uploadPost = (uri, user_id, tags) => {
     }
 }
 
+export const getTags = (tag) => {
+    return dispatch => {
+        axios.get(SERVER+'/api/tag/search/' + tag).then(res => {
+            if (res.data.success) {
+                dispatch(resolveGetTags(res.data.data))
+            }
+        })
+    }
+}
+
 export const resolveUploadPost = (success) => {
     return {
         type: UPLOAD_POST,
         success: success
+    }
+}
+
+export const resolveGetTags = (tags) => {
+    return {
+        type: GET_TAGS,
+        tags
     }
 }

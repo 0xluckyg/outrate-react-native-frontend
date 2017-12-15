@@ -13,7 +13,8 @@
     "react-native": "0.50.4",
     "react-native-aws3": "0.0.8",
     "react-native-camera-roll-picker": "^1.2.3",
-    "react-native-facebook-login": "^1.6.0"
+    "react-native-facebook-login": "^1.6.0",
+    "react-native-keyboard-aware-scroll-view": "^0.4.1"
   },
   "devDependencies": {
     "axios": "^0.17.1",

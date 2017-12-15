@@ -92,14 +92,6 @@ const mockData = [
     }
 ]
 
-const Cell = ({data}) => {    
-    return (
-        <View>                        
-            <Image style={styles.image} source={data.image.image}></Image>                        
-        </View>
-    );
-}
-
 class Posts extends Component {
     constructor(props) {
         super(props);		
@@ -107,13 +99,15 @@ class Posts extends Component {
     }
     
     render() {
+        console.log('allmyposts',this.props.data.posts);
+        // debugger;
         return (
             <View style={styles.container}>
                 <FlatList    
                     style={styles.list}                               
-                    data={mockData}
+                    data={this.props.data.posts}
                     renderItem={({item}) => {                        
-                        return             <Image style={styles.image} source={item.image.image}></Image>
+                        return <Image style={styles.image} source={{uri:item.image_url}}></Image>
                     }}        
                     keyExtractor={(item, index) => index}                    
                     numColumns={2}

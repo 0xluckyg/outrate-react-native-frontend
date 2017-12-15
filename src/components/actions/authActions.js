@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
-import {SET_SELF, SERVER, LOCAL_SERVER} from '../../helper/constants'
+import {SET_SELF, SERVER} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
@@ -24,7 +24,7 @@ export const facebookAuth = (userInfo) => {
                             last: firstLastName[1],
                             email: info.data.email
                         }                                             
-                        axios.post(LOCAL_SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                            
+                        axios.post(SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                            
                             console.log('auth', res)
                             if (res.data.success) {                                                                
                                 store.dispatch(indicatorActions.showToast(true))                                

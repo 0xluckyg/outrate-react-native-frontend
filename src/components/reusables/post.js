@@ -89,16 +89,13 @@ class Post extends Component {
         }
     }      
 
-    isRating() {                
-        console.log('newsfeed? ',this.props.data.rating)
-        let rating = this.props.data.rating || 50
-        let raters = this.props.data.raters.length        
+    isRating() {                                        
 
         if (this.state.isTapped) {
             return (
                 <View style={styles.ratingView}>
                     <Text style={styles.ratingText}>{this.state.value}</Text>
-                    <Text style={styles.ratedByText}>{`Rated by ${raters}`}</Text>
+                    <Text style={styles.ratedByText}>{`Rated by ${this.props.data.raters.length}`}</Text>
                 </View>
             )
         }
@@ -110,8 +107,8 @@ class Post extends Component {
         if (!this.state.isTapped) {
             return (
                 <View style={styles.imageFooter}>
-                    <Text style={styles.ratingFooterText}>{rating}</Text>
-                    <Text style={styles.ratedByFooterText}>{`Rated by ${raters}`}</Text>
+                    <Text style={styles.ratingFooterText}>{this.props.data.rating  || 50}</Text>
+                    <Text style={styles.ratedByFooterText}>{`Rated by ${this.props.data.raters.length}`}</Text>
                 </View>
             )
         }         

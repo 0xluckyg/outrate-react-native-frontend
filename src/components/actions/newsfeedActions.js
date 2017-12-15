@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
-import {SERVER, RATE, LOCAL_SERVER, GET_RECENT_POSTS, GET_TRENDING_POSTS} from '../../helper/constants'
+import {RATE, SERVER, GET_RECENT_POSTS, GET_TRENDING_POSTS} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
@@ -9,7 +9,7 @@ export const getRecentPosts = (skip) => {
     return dispatch => {                        
         user_id = store.getState().profile.self.user_id
         queryString = `${skip}-${user_id}`
-        axios.get(LOCAL_SERVER+'/post/'+queryString).then(res => {            
+        axios.get(SERVER+'/post/'+queryString).then(res => {            
             if (res.data.success) {
                 dispatch(resolveGetRecentPosts(res.data.data))                
             }            
@@ -21,7 +21,7 @@ export const getTrendingPosts = (skip) => {
     return dispatch => {        
         user_id = store.getState().profile.self.user_id
         queryString = `${skip}-${user_id}`                
-        axios.get(LOCAL_SERVER+'/post/'+queryString).then(res => {                        
+        axios.get(SERVER+'/post/trending/').then(res => {                        
             if (res.data.success) {                
                 dispatch(resolveGetTrendingPosts(res.data.data))                
             }        
@@ -31,7 +31,7 @@ export const getTrendingPosts = (skip) => {
 
 export const ratePost = (post_id, value) => {    
     return dispatch => {
-        axios.post(LOCAL_SERVER+'/post/rate/'+post_id, {
+        axios.post(SERVER+'/post/rate/'+post_id, {
             rating: value,
             user_id: user_id = store.getState().profile.self.user_id
         }).then(res => {

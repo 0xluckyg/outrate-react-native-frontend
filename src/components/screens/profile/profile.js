@@ -4,11 +4,13 @@ import {
 	View,
 	TouchableOpacity,
 	Text,
-	Dimensions
+	Dimensions,
+	FlatList,
+	Image
 } from 'react-native';
 
 import { connect } from 'react-redux';
-
+import * as profileActions from '../../actions/profileActions';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import CustomScrollTab from '../../reusables/customScrollTab'
 import Posts from '../../reusables/userPosts'
@@ -19,12 +21,16 @@ var width = Dimensions.get('window').width;
 
 class Profile extends Component {
     constructor(props) {
-        super(props);		
-			
-        
-    }
+		super(props);				
+	}
+	
+	componentWillMount() {
+		this.props.getUserPosts(0)		
+	}
     
     render() {
+		console.log('why',this.props.self)		
+		console.log('why?',this.props.self)		
         return (
 			<View style={styles.mainView}>
 				<ScrollableTabView
@@ -37,7 +43,20 @@ class Profile extends Component {
 									underlineStyle={{backgroundColor:'#000', height:1}} />}
 				>
 					<View tabLabel='Posts' style={styles.mainView}>						
-						<Posts/>
+						<View style={styles.container}>
+							<FlatList    
+								style={styles.list}                               
+								data={this.props.self.posts}
+								renderItem={({item}) => {  
+									console.log('item?',item)
+									if (item.image_url) {
+										return <Image style={styles.image} source={{uri:item.image_url}}></Image>
+									}									
+								}}        
+								keyExtractor={(item, index) => index}                    
+								numColumns={2}
+							/>
+					</View>						
 					</View>
 					<View tabLabel="Me" style={styles.mainView}>            	            										
 						<Me/>
@@ -63,6 +82,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff'
 	},
+    list: {
+        flexDirection: 'column'
+    },
+    image: {
+        flex: 1,
+        width: width/2,
+        height: width/2
+    }
 });
 
-export default Profile
+const mapStateToProps = (state) => (
+	{
+        self: state.profile.self
+	}
+)
+
+export default connect(mapStateToProps, profileActions)(Profile)

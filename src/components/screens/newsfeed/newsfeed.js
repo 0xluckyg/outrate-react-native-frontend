@@ -18,8 +18,6 @@ var width = Dimensions.get('window').width;
 class Newsfeed extends Component {
     constructor(props) {
         super(props);		
-			
-        
 	}
 	
 	componentWillMount() {
@@ -28,6 +26,7 @@ class Newsfeed extends Component {
     }
     
     render() {		
+		console.log(this.props.recentPosts)
         return (		
 			<View style={styles.mainView}>
 				<ScrollableTabView
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => (
 	{
         recentPosts: state.newsfeed.recentPosts,
-        trendingPosts: state.newsfeed.recentPosts,        
+        trendingPosts: state.newsfeed.trendingPosts,        
 	}
 )
 

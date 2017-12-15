@@ -21,6 +21,7 @@ import {AppColors} from '../../../helper/style'
 import Tags from '../../reusables/tags'
 import Post from '../../reusables/post'
 import * as uploadActions from '../../actions/uploadActions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 var width = Dimensions.get('window').width;
 
@@ -60,9 +61,12 @@ class UploadSelected extends Component {
     
     render() {          
         return (
-            <KeyboardAvoidingView 
-                behavior='padding'            
-                style={styles.mainView}                
+            <KeyboardAwareScrollView 
+                // behavior='padding'            
+                style={styles.mainView}   
+                keyboardOpeningTime={20}   
+                // viewIsInsideTabBar={true}          
+                extraHeight={200}
             >     
                 <Header headerText='Ready to go!'/>                
                 <TouchableWithoutFeedback 
@@ -109,7 +113,7 @@ class UploadSelected extends Component {
                     <Tags tags={this.state.tags}/>            
                     </View>
                 </TouchableWithoutFeedback>
-			</KeyboardAvoidingView>
+			</KeyboardAwareScrollView>
         );
     }
 }
