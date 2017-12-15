@@ -51,26 +51,9 @@ export const uploadPost = (uri, user_id, tags) => {
     }
 }
 
-export const getTags = (tag) => {
-    return dispatch => {
-        axios.get(SERVER+'/api/tag/search/' + tag).then(res => {
-            if (res.data.success) {
-                dispatch(resolveGetTags(res.data.data))
-            }
-        })
-    }
-}
-
 export const resolveUploadPost = (success) => {
     return {
         type: UPLOAD_POST,
         success: success
-    }
-}
-
-export const resolveGetTags = (tags) => {
-    return {
-        type: GET_TAGS,
-        tags
     }
 }

@@ -10,7 +10,6 @@ export const SET_SELF = "SET_SELF"
 export const SET_MY_POSTS = "SET_MY_POSTS"
 
 export const UPLOAD_POST = "UPLOAD_POST"
-export const GET_TAGS= "GET_TAGS"
 
 export const GET_RECENT_POSTS = "GET_RECENT_POSTS"
 export const GET_TRENDING_POSTS = "GET_TRENDING_POSTS"

@@ -10,14 +10,18 @@ import {
     TextInput,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    FlatList
 } from 'react-native';
+import Lodash from 'lodash';
 import { connect } from 'react-redux';
 import {
 	back
 } from '../../../images/images';
 import { Actions } from 'react-native-router-flux'
 import {AppColors} from '../../../helper/style'
+import {SERVER} from '../../../helper/constants'
+import axios from 'axios'
 import Tags from '../../reusables/tags'
 import Post from '../../reusables/post'
 import * as uploadActions from '../../actions/uploadActions';
@@ -43,23 +47,57 @@ class UploadSelected extends Component {
                 
         this.state = {
             tags: [],
+            tagOptions: [],
             currentTag: ''
-        }
+        }                
 
-        this.tagExists = this.tagExists.bind(this)
-        
+        this.searchTags = this.searchTags.bind(this)
+        this.renderTagOptions = this.renderTagOptions.bind(this)
     }
 
-    tagExists(check) {
-        this.state.tags.map(tag => {            
-            if (tag.name.localeCompare(check)) {                                
-                return true
+    searchTags(tag) {
+        axios.get(SERVER+'/tag/search/' + tag).then(res => {            
+            if (res.data.success) {
+                console.log('a', res.data)
+                this.setState({tagOptions: res.data.data})
             }
+        }).catch(err => {
+            console.log(err)
         })
-        return false
+    }
+
+    renderTagOptions() {
+        if (this.state.tagOptions.length > 0) {
+            console.log(this.state.tagOptions)
+            return (                
+                <FlatList
+                    style={styles.tagOptions}
+                    data={this.state.tagOptions}
+                    renderItem={({item}) => {                                                                         
+                        return <TouchableOpacity 
+                                    style={styles.tagOption}
+                                    onPress={() => {
+                                        this.setState({
+                                            tag: this.state.tags.push(item.name),
+                                            tagOptions: []
+                                        })
+                                    }}
+                                >
+                                    <Text style={styles.tagOptionText}>
+                                        {item.name}
+                                    </Text>          
+                                </TouchableOpacity>                                    
+                    }}  
+                    keyExtractor={(item, index) => index}        
+                >                    
+                </FlatList>
+            )
+        }
     }
     
-    render() {          
+    render() {        
+        const tagSearch = Lodash.debounce((term) => {this.searchTags(term)}, 300);
+        
         return (
             <KeyboardAwareScrollView 
                 // behavior='padding'            
@@ -98,18 +136,23 @@ class UploadSelected extends Component {
                         style={styles.tagInput}
                         onChangeText={currentTag => {                            
                             this.setState({currentTag})
+                            tagSearch(currentTag)
                         }}
                         onSubmitEditing={(event) => {                            
                             tags = this.state.tags
-                            if (!this.tagExists(this.state.currentTag)){                                
+                            if (!this.state.tags.includes(event.nativeEvent.text)){                                
                                 tags.push({name:event.nativeEvent.text})                                
-                                this.setState({tags})
+                                this.setState({
+                                    tags,
+                                    tagOptions: []
+                                })
                                 this._textInput.setNativeProps({text: ''});                                
                             }                                          
                             event.nativeEvent.text = ''                                          
                         }}
                         value={this.state.text}
                     />
+                    {this.renderTagOptions()}
                     <Tags tags={this.state.tags}/>            
                     </View>
                 </TouchableWithoutFeedback>
@@ -189,12 +232,28 @@ const styles = StyleSheet.create({
         height: 40, 
         borderColor: 'gray', 
         borderBottomWidth: 1
+    },
+    tagOptions: {
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 5,
+        marginBottom: 5,                 
+    },
+    tagOption: {            
+        borderColor: AppColors.appMediumGray, 
+        borderBottomWidth: 1
+    },
+    tagOptionText: {
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 5,
+        marginBottom: 5,     
     }
 });
 
 const mapStateToProps = (state) => (
 	{
-		self: state.profile.self
+        self: state.profile.self        
 	}
 )
 

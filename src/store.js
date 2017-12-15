@@ -7,7 +7,7 @@ import indicatorReducer from './components/reducers/indicatorReducer';
 const reducers = combineReducers({      
     profile: profileReducer,
     newsfeed: newsfeedReducer,
-    indicator: indicatorReducer
+    indicator: indicatorReducer,    
 });
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
