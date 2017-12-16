@@ -5,9 +5,12 @@ import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
 
-export const getUser = () => {          
-    return dispatch => {        
-        let user_id = store.getState().profile.self.user_id
+export const getUser = (user_id) => {     
+
+    return dispatch => {      
+        if (user_id == undefined) {
+            user_id = store.getState().profile.self.user_id   
+        }        
         axios.get(SERVER+'/user/'+user_id)
         .then((res) => {
             if (res.data.success) {                           

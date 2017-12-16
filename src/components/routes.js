@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import {Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Router, Scene, Stack} from 'react-native-router-flux';
 import {AppColors} from '../helper/style';
+import * as profileActions from './actions/profileActions';
+import {store} from '../store'
+import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
+import { connect } from 'react-redux';
+import {AsyncStorage} from 'react-native';
 
 import Auth from './screens/auth';
 import Photo from './screens/photo';
@@ -46,18 +51,30 @@ class RouterComponent extends Component {
         super();
 
         this.state = {            
-            loading: true
+            loading: true,
+            isLoggedIn: false
         }
+
+        this.isLoggedIn = this.isLoggedIn.bind(this)
     }
 
-    componentWillMount() {  
-        // Auth logic goes here
-        // AsyncStorage.getItem('token').then(token => {
-                     
-        // });
+    componentWillMount() {           
+        AsyncStorage.getItem('id').then(id => {
+            console.log('why no id',id)
+            store.dispatch(profileActions.getUser(id))
+            this.setState({isLoggedIn: true})
+        })               
 
         this.setState({loading: false});
     };
+
+    isLoggedIn() {
+        if (this.state.isLoggedIn) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     render() {
         if (this.state.loading) {
@@ -76,12 +93,14 @@ class RouterComponent extends Component {
                         key='auth' 
                         component={Auth}                         
                         hideNavBar
+                        initial={this.isLoggedIn()}
                     />
                     <Scene                    
                         key='tab'
                         tabBarStyle={styles.footerStyle}
                         showLabel={false}
                         hideNavBar    
+                        // initial={this.isLoggedIn()}
                         tabs                                                
                     >         
                         <Scene key='newsfeedTab' title='newsfeedTab' icon={TabIcon}>               
@@ -174,5 +193,5 @@ const styles = {
 }
 
 
-export default RouterComponent;
+export default RouterComponent
 

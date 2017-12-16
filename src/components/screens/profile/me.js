@@ -8,6 +8,7 @@ import {
     FlatList,
     Image
 } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
 import {
 	mock1,
@@ -15,6 +16,8 @@ import {
 import Cell from '../../reusables/cell'
 import Tags from '../../reusables/tags'
 import Lightbox from 'react-native-lightbox';
+import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
+import { Actions } from 'react-native-router-flux'
 
 var width = Dimensions.get('window').width;
 const dummyText = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when"
@@ -43,6 +46,21 @@ class Me extends Component {
                     <View style={styles.divider}/>
                     <Text style={styles.bioContent}>{dummyText}</Text>
                 </View>
+                <TouchableOpacity onPress={() => {
+                    FBLoginManager.logout(function(error, data){
+                        if (!error) {
+                            AsyncStorage.removeItem('id').then(() => {
+                                Actions.auth()                               
+                            })                            
+                        } else {
+                            console.log(error)
+                        }
+                    });
+                }}>
+                    <Text>
+                        LOGOUT
+                    </Text>
+                </TouchableOpacity>
              </View>
         );        
     }

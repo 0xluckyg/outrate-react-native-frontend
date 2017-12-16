@@ -5,6 +5,7 @@ import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
 import { Actions } from 'react-native-router-flux'
+
 const FB_PHOTO_WIDTH = 400;
 
 export const facebookAuth = (userInfo) => {    
@@ -28,8 +29,10 @@ export const facebookAuth = (userInfo) => {
                             console.log('auth', res)
                             if (res.data.success) {                                                                
                                 store.dispatch(indicatorActions.showToast(true))                                
-                                Actions.tab()   
-                                dispatch(resolveAuth({...cleanInfo,...{user_id:info.data.id}}))                                
+                                AsyncStorage.setItem('id', info.data.id).then(() => {
+                                    dispatch(resolveAuth({...cleanInfo,...{user_id:info.data.id}}))                                
+                                    Actions.tab()                                   
+                                })                                                                    
                             } else {
                                 console.log(res.data.message)
                             }                            
@@ -50,6 +53,8 @@ function firstLastName(name) {
     }
     return name
 }
+
+
 
 export const resolveAuth = (res) => {        
     return {
