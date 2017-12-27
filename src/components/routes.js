@@ -27,7 +27,9 @@ import {
     profileSelected    
 } from '../images/images';
 
-// import {store} from '../store';
+import { Actions } from 'react-native-router-flux'
+import {SERVER, SET_SELF,SET_MY_POSTS} from '../helper/constants'
+import axios from 'axios';
 
 const TabIcon = ({focused, title}) => {    
     let tabBarImage; let selectedTabBarImage;
@@ -56,12 +58,27 @@ class RouterComponent extends Component {
         }
     }
 
+    getUser() {
+        axios.get(SERVER+'/user/'+user_id)
+        .then((res) => {            
+            if (res.data.success) {                           
+                
+            }                        
+        })
+    }
+
     componentWillMount() {           
-        AsyncStorage.getItem('id').then(id => {
-            console.log('why no id',id)
+        AsyncStorage.getItem('id').then(id => {            
             if (id) {
-                store.dispatch(profileActions.getUser(id))
-                this.setState({isLoggedIn: true, loading: false});
+                axios.get(SERVER+'/user/'+id)
+                .then((res) => {            
+                    if (res.data.success) {                           
+                        this.setState({isLoggedIn: true, loading: false});
+                        store.dispatch(profileActions.resolveGetUser(res.data.data))
+                    } else { 
+                        this.setState({loading: false});
+                    }                        
+                })                
             } else {
                 this.setState({loading: false});
             }            
