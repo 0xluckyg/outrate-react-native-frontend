@@ -18,7 +18,7 @@ export const facebookAuth = (userInfo) => {
                 
                 axios.get(picture).then(pic => {                    
                     axios.get(userInfo).then(info => {                                                                                                
-                        firstLastName = firstLastName(info.data.name)
+                        firstLastName = getFirstLastName(info.data.name)
                         cleanInfo = {                                             
                             profile: pic.data.data.url,
                             first: firstLastName[0],
@@ -47,11 +47,26 @@ export const facebookAuth = (userInfo) => {
     }
 }
 
-function firstLastName(name) {    
+function getFirstLastName(name) {    
     if (name.indexOf(' ') >= 0) {
         name = name.split(' ')
     }
     return name
+}
+
+export const logOut = () => {
+    return dispatch => {
+        FBLoginManager.logout(function(error, data){
+            if (!error) {
+                AsyncStorage.removeItem('id').then(() => {
+                    Actions.auth()
+                    dispatch(resolveAuth({}))                    
+                })                            
+            } else {
+                console.log(error)
+            }
+        });
+    }
 }
 
 

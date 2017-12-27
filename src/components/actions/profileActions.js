@@ -10,9 +10,11 @@ export const getUser = (user_id) => {
     return dispatch => {      
         if (user_id == undefined) {
             user_id = store.getState().profile.self.user_id   
-        }        
+        }
+        console.log(user_id)
         axios.get(SERVER+'/user/'+user_id)
         .then((res) => {
+            console.log('why no res', res)
             if (res.data.success) {                           
                 dispatch(resolveGetUser(res.data.data))
             }                        
@@ -25,12 +27,12 @@ export const getUserPosts = (skip) => {
         let user_id = store.getState().profile.self.user_id
         queryString = `${skip}-${user_id}`          
         axios.get(SERVER+'/post/user/'+queryString)
-        .then((res) => {
+        .then((res) => { 
             if (res.data.success) {                       
                 console.log('call success')             
                 dispatch(resolveGetMyPosts(res.data.data))                
             }                                   
-        })                
+        })                  
     }
 }
 

@@ -46,17 +46,7 @@ class Me extends Component {
                     <View style={styles.divider}/>
                     <Text style={styles.bioContent}>{dummyText}</Text>
                 </View>
-                <TouchableOpacity onPress={() => {
-                    FBLoginManager.logout(function(error, data){
-                        if (!error) {
-                            AsyncStorage.removeItem('id').then(() => {
-                                Actions.auth()                               
-                            })                            
-                        } else {
-                            console.log(error)
-                        }
-                    });
-                }}>
+                <TouchableOpacity onPress={Actions.settings}>
                     <Text>
                         LOGOUT
                     </Text>

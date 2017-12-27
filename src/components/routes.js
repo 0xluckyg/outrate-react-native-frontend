@@ -54,27 +54,19 @@ class RouterComponent extends Component {
             loading: true,
             isLoggedIn: false
         }
-
-        this.isLoggedIn = this.isLoggedIn.bind(this)
     }
 
     componentWillMount() {           
         AsyncStorage.getItem('id').then(id => {
             console.log('why no id',id)
-            store.dispatch(profileActions.getUser(id))
-            this.setState({isLoggedIn: true})
-        })               
-
-        this.setState({loading: false});
+            if (id) {
+                store.dispatch(profileActions.getUser(id))
+                this.setState({isLoggedIn: true, loading: false});
+            } else {
+                this.setState({loading: false});
+            }            
+        })                       
     };
-
-    isLoggedIn() {
-        if (this.state.isLoggedIn) {
-            return true
-        } else {
-            return false
-        }
-    }
 
     render() {
         if (this.state.loading) {
@@ -93,14 +85,14 @@ class RouterComponent extends Component {
                         key='auth' 
                         component={Auth}                         
                         hideNavBar
-                        initial={this.isLoggedIn()}
+                        initial={this.state.isLoggedIn}
                     />
                     <Scene                    
                         key='tab'
-                        tabBarStyle={styles.footerStyle}
+                        tabBarStyle={styles.footerStyle} 
                         showLabel={false}
                         hideNavBar    
-                        // initial={this.isLoggedIn()}
+                        initial={this.state.isLoggedIn}
                         tabs                                                
                     >         
                         <Scene key='newsfeedTab' title='newsfeedTab' icon={TabIcon}>               
@@ -136,6 +128,14 @@ class RouterComponent extends Component {
                                     titleStyle={styles.headerFontStyle}
                                     sceneStyle={styles.sceneWithoutTabbarStyle}
                                     title='Profile'                                                                    
+                            />
+                            <Scene
+                                    key='settings'
+                                    component={Settings}                                    
+                                    navigationBarStyle={styles.headerStyle}
+                                    titleStyle={styles.headerFontStyle}
+                                    sceneStyle={styles.sceneWithoutTabbarStyle}
+                                    title='Settings'                                                                    
                             />
                         </Scene>
                     </Scene>
