@@ -63,15 +63,18 @@ class RouterComponent extends Component {
         .then((res) => {            
             if (res.data.success) {                           
                 
-            }                        
+            }   
         })
     }
 
-    componentWillMount() {           
-        AsyncStorage.getItem('id').then(id => {            
+    componentWillMount() {  
+        // AsyncStorage.removeItem('id')         
+        AsyncStorage.getItem('id').then(id => {
             if (id) {
                 axios.get(SERVER+'/user/'+id)
                 .then((res) => {            
+                    console.log('noid',id)
+                    console.log(res)
                     if (res.data.success) {                           
                         this.setState({isLoggedIn: true, loading: false});
                         store.dispatch(profileActions.resolveGetUser(res.data.data))

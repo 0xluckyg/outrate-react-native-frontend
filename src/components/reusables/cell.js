@@ -75,7 +75,7 @@ class Cell extends Component {
                     </View>
                     <View style={styles.rowContentStyle}>
                         <View>
-                            <Text style={styles.topTextStyle}>{this.props.data.first + " " + this.props.data.last}</Text>
+                            <Text style={styles.topTextStyle}>{this.props.data.username}</Text>
                         </View>                        
                     </View>
                     {this.renderButtons()}

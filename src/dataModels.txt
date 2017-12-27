@@ -1,8 +1,7 @@
 /api/user/:user_id
 {                                             
     profile: String,
-    first: String,
-    last: String,
+    username: String,
     email: String
 }       
 
@@ -18,8 +17,7 @@ GET /api/post
     [
         image_url: String
         owner: {
-            first: String,
-            last: String,
+            username: String,
             profile: String,
             user_id: String,
             posts: [

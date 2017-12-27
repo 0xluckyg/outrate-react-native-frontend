@@ -36,7 +36,7 @@ class Me extends Component {
                     <Image style={styles.image} source={{uri:this.props.profile.profile}}></Image>
                     <View style={styles.imageFooter}>
                         <Text style={styles.name}>{
-                            `${this.props.profile.first} ${this.props.profile.last}`
+                            `${this.props.profile.username}`
                         }</Text>
                     </View>                    
                 </View>
@@ -47,9 +47,9 @@ class Me extends Component {
                     <Text style={styles.bioContent}>{dummyText}</Text>
                 </View>
                 <TouchableOpacity onPress={Actions.settings}>
-                    <Text>
-                        LOGOUT
-                    </Text>
+                    <Image>
+                        
+                    </Image>
                 </TouchableOpacity>
              </View>
         );        

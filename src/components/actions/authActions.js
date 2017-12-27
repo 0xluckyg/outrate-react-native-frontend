@@ -17,14 +17,13 @@ export const facebookAuth = (userInfo) => {
                 var userInfo = `https://graph.facebook.com/v2.3/${user.userId}?fields=name,email&access_token=${user.token}`;
                 
                 axios.get(picture).then(pic => {                    
-                    axios.get(userInfo).then(info => {                                                                                                
-                        firstLastName = getFirstLastName(info.data.name)
+                    axios.get(userInfo).then(info => {     
+                        console.log('fb',info)
                         cleanInfo = {                                             
                             profile: pic.data.data.url,
-                            first: firstLastName[0],
-                            last: firstLastName[1],
+                            username: info.data.name,
                             email: info.data.email
-                        }                                             
+                        }                                                                     
                         axios.post(SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                            
                             console.log('auth', res)
                             if (res.data.success) {                                                                
@@ -45,13 +44,6 @@ export const facebookAuth = (userInfo) => {
             }
         });
     }
-}
-
-function getFirstLastName(name) {    
-    if (name.indexOf(' ') >= 0) {
-        name = name.split(' ')
-    }
-    return name
 }
 
 export const logOut = () => {

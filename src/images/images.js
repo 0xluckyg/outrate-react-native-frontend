@@ -26,6 +26,9 @@ const clothSelected = require('./tabbar/clothSelected.png');
 const profile = require('./tabbar/profile.png');
 const profileSelected = require('./tabbar/profileSelected.png');
 
+//profile
+const settings = require('./other/settings.png');
+
 module.exports = {
     mock1,
     mock2,
@@ -49,5 +52,7 @@ module.exports = {
     cloth,
     clothSelected,
     profile,
-    profileSelected
+    profileSelected,
+
+    settings
 }

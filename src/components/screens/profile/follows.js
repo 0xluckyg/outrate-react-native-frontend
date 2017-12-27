@@ -21,65 +21,6 @@ import * as profileActions from '../../actions/profileActions';
 
 var width = Dimensions.get('window').width;
 
-const mockData = [
-    {
-        _id: 'id1',            
-        image: mock1,
-        name: {
-            first: 'First1',
-            last: 'Last1'
-        }        
-    },
-    {
-        _id: 'id2',           
-        image: mock2,
-        name: {
-            first: 'First2',
-            last: 'Last2'
-        }        
-    },
-    {
-        _id: 'id3',            
-        image: mock3,
-        name: {
-            first: 'First3',
-            last: 'Last3'
-        }
-    },
-    {
-        _id: 'id4',                  
-        image: mock1,
-        name: {
-            first: 'First1',
-            last: 'Last1'
-        }        
-    },
-    {
-        _id: 'id5',        
-        image: mock2,
-        name: {
-            first: 'First2',
-            last: 'Last2'
-        }        
-    },
-    {
-        _id: 'id6',             
-        image: mock3,
-        name: {
-            first: 'First3',
-            last: 'Last3'
-        }    
-    },
-    {
-        _id: 'id7',                
-        image: mock1,
-        name: {
-            first: 'First1',
-            last: 'Last1'
-        } 
-    }
-]
-
 class Follows extends Component {
     constructor(props) {
         super(props);		
