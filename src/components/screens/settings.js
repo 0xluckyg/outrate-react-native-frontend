@@ -11,6 +11,7 @@ import {
 import {AppColors} from '../../helper/style';
 import { connect } from 'react-redux';
 import * as authActions from '../actions/authActions';
+import {Actions} from 'react-native-router-flux'
 import NavBar from '../reusables/navBar';
 
 class Settings extends Component {
@@ -82,7 +83,10 @@ class Settings extends Component {
 			//text, borderTop, borderBottom, isSwitch, image, imageColor, callback, value
 
 			<View style={{flex:1}}>
-				<NavBar headerText="Settings"/>
+				<NavBar 
+					headerText="Settings"
+					backAction={Actions.pop}
+				/>
 				<ScrollView style={styles.containerStyle}>								
 					{this.renderGrayContainer()}
 					{this.renderGrayContainer('NOTIFICATIONS')}
