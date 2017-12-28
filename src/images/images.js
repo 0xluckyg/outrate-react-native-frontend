@@ -29,6 +29,11 @@ const profileSelected = require('./tabbar/profileSelected.png');
 //profile
 const settings = require('./other/settings.png');
 
+//No content
+const heart = require('./other/heart.png');
+const heel = require('./other/heel.png');
+const beanie = require('./other/beanie.png');
+
 module.exports = {
     mock1,
     mock2,
@@ -54,5 +59,9 @@ module.exports = {
     profile,
     profileSelected,
 
-    settings
+    settings,
+
+    heart,
+    heel,
+    beanie
 }

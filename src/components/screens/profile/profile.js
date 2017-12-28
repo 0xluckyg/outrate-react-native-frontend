@@ -14,23 +14,23 @@ import * as profileActions from '../../actions/profileActions';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import CustomScrollTab from '../../reusables/customScrollTab'
 import Posts from '../../reusables/userPosts'
+import NoContent from '../../reusables/noContent'
 import Me from './me'
 import Follows from './follows'
+import {beanie} from '../../../images/images'
 
 var width = Dimensions.get('window').width;
 
 class Profile extends Component {
     constructor(props) {
-		super(props);				
+		super(props);			
 	}
 	
 	componentWillMount() {
 		this.props.getUserPosts(0)		
 	}
     
-    render() {
-		console.log('why',this.props.self)		
-		console.log('why?',this.props.self)		
+    render() {		
         return (
 			<View style={styles.mainView}>
 				<ScrollableTabView
@@ -42,21 +42,26 @@ class Profile extends Component {
 									textStyle={{color:'#000'}} 
 									underlineStyle={{backgroundColor:'#000', height:1}} />}
 				>
-					<View tabLabel='Posts' style={styles.mainView}>						
-						<View style={styles.container}>
-							<FlatList    
-								style={styles.list}                               
-								data={this.props.self.posts}
-								renderItem={({item}) => {  
-									console.log('item?',item)
-									if (item.image_url) {
-										return <Image style={styles.image} source={{uri:item.image_url}}></Image>
-									}									
-								}}        
-								keyExtractor={(item, index) => index}                    
-								numColumns={2}
-							/>
-					</View>						
+					<View tabLabel='Posts' style={styles.mainView}>	
+					{(this.props.self.posts.length > 0) ?
+						<View style={styles.container}>														
+								<FlatList    
+									style={styles.list}                               
+									data={this.props.self.posts}
+									renderItem={({item}) => {  									
+										if (item.image_url) {
+											return <Image style={styles.image} source={{uri:item.image_url}}></Image>
+										}									
+									}}        
+									keyExtractor={(item, index) => index}                    
+									numColumns={2}
+								/>								
+						</View> :
+						<NoContent
+							image={beanie}
+							text={'upload a photo!'}
+						/>
+					}				
 					</View>
 					<View tabLabel="Me" style={styles.mainView}>            	            										
 						<Me/>

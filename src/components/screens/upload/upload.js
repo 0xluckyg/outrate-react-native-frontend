@@ -62,12 +62,12 @@ class Upload extends Component {
 						<TouchableOpacity style={styles.capture} onPress={this.takePicture}/>
 						</Camera>
 					</View>		
-					<View tabLabel='Album' style={styles.mainView}>					
+					<View tabLabel='Album' style={styles.mainView}>
 						<CameraRollPicker
 							callback={this.getSelectedImages} 
 							imageMargin={0}
 							selectSingleItem={true}
-							backgroundColor='white'
+							backgroundColor='white'							
 						/>
 					</View>					
 				</ScrollableTabView>								

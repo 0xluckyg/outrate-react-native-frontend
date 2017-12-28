@@ -1,6 +1,6 @@
 //SERVER
-// export const SERVER = "http://localhost:4000/api"
-export const SERVER = "https://fash-main-api.appspot.com/api"
+export const SERVER = "http://localhost:4000/api"
+// export const SERVER = "https://fash-main-api.appspot.com/api"
 
 //INDICATORS
 export const SHOW_SPINNER = "SHOW_SPINNER"

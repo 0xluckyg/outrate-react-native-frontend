@@ -10,8 +10,9 @@ import {
     Image
 } from 'react-native';
 import Post from '../../reusables/post'
-
+import NoContent from '../../reusables/noContent'
 import { Actions } from 'react-native-router-flux';
+import { heel } from '../../../images/images'
 
 class List extends Component {
     constructor(props) {
@@ -23,24 +24,33 @@ class List extends Component {
     }
 
     render() {        
-        return (
-            <View style={styles.mainView}>
-                <FlatList                   
-                    scrollEnabled={this.state.scrollEnabled}                
-                    data={this.props.data}
-                    renderItem={({item}) => {                                                     
-                        return <Post 
-                            data={item}
-                            ratable={true}   
-                            scroll={(bool) => {
-                                this.setState({scrollEnabled:bool})
-                            }}                         
-                        />
-                    }}        
-                    keyExtractor={(item, index) => index}                    
+        if (this.props.data.length > 0) {
+            return (
+                <View style={styles.mainView}>            
+                    <FlatList                   
+                        scrollEnabled={this.state.scrollEnabled}                
+                        data={this.props.data}
+                        renderItem={({item}) => {                                                     
+                            return <Post 
+                                data={item}
+                                ratable={true}   
+                                scroll={(bool) => {
+                                    this.setState({scrollEnabled:bool})
+                                }}                         
+                            />
+                        }}        
+                        keyExtractor={(item, index) => index}                    
+                    />
+              </View>
+            );      
+        } else {
+            return (
+                <NoContent
+                    image={heel}
+                    text="No posts here!"
                 />
-          </View>
-        );        
+            )
+        }     
     }
 }
 

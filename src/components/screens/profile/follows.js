@@ -9,14 +9,13 @@ import {
     Image
 } from 'react-native';
 import { connect } from 'react-redux';
-import {
-	mock1,
-	mock2,
-    mock3,
-    minus
+import {	
+    minus,
+    heart
 } from '../../../images/images';
 import Cell from '../../reusables/cell'
 import Tags from '../../reusables/tags'
+import NoContent from '../../reusables/noContent'
 import * as profileActions from '../../actions/profileActions';
 
 var width = Dimensions.get('window').width;
@@ -61,13 +60,22 @@ class Follows extends Component {
     render() {        
         return (
             <View style={styles.mainView}>
-                <FlatList                                   
-                    data={this.getData()}
-                    renderItem={({item}) => {                        
-                        return this.renderFollow(item)
-                    }}        
-                    keyExtractor={(item, index) => index}                    
-                />
+                {(this.getData().length > 0) ? 
+                    <FlatList                                   
+                        data={this.getData()}
+                        renderItem={({item}) => {                        
+                            return this.renderFollow(item)
+                        }}        
+                        keyExtractor={(item, index) => index}                    
+                    /> :
+
+                    <NoContent
+                        image={heart}
+                        text={(this.props.type == "followers") ? 
+                             "No followers" : "No following"
+                            }
+                    />
+                }
           </View>
         );        
     }
