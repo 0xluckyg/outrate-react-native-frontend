@@ -139,9 +139,17 @@ class UploadSelected extends Component {
                             tagSearch(currentTag)
                         }}
                         onSubmitEditing={(event) => {                            
-                            tags = this.state.tags
-                            if (!this.state.tags.includes(event.nativeEvent.text)){                                
-                                tags.push({name:event.nativeEvent.text})                                
+                            tags = this.state.tags    
+                            flag = false             
+                            input = event.nativeEvent.text.toLowerCase()           
+                            this.state.tags.forEach(tag => {                                
+                                if (tag.name === input) {                                    
+                                    flag = true
+                                    return                                    
+                                }
+                            })                            
+                            if (!flag) {
+                                tags.push({name:input})                                
                                 this.setState({
                                     tags,
                                     tagOptions: []

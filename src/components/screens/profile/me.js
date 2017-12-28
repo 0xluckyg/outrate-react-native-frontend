@@ -18,6 +18,9 @@ import Tags from '../../reusables/tags'
 import Lightbox from 'react-native-lightbox';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
 import { Actions } from 'react-native-router-flux'
+import {
+	settings
+} from '../../../images/images';
 
 var width = Dimensions.get('window').width;
 const dummyText = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when"
@@ -47,9 +50,10 @@ class Me extends Component {
                     <Text style={styles.bioContent}>{dummyText}</Text>
                 </View>
                 <TouchableOpacity onPress={Actions.settings}>
-                    <Image>
-                        
-                    </Image>
+                    <Image 
+                        style={styles.settingsButton}
+                        source={settings}
+                    />                                        
                 </TouchableOpacity>
              </View>
         );        
@@ -108,7 +112,14 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginBottom: 40     
-    }   
+    },
+    settingsButton: {
+        height: 30,
+        width: 30,
+        alignSelf: 'flex-end',
+        marginBottom: 5,
+        marginRight: 5
+    }
 });
 
 const mapStateToProps = (state) => (

@@ -11,6 +11,7 @@ import {
 import {AppColors} from '../../helper/style';
 import { connect } from 'react-redux';
 import * as authActions from '../actions/authActions';
+import NavBar from '../reusables/navBar';
 
 class Settings extends Component {
 
@@ -51,9 +52,8 @@ class Settings extends Component {
 
 		return (
 			<View
-				style={styles.whiteContainerStyle}
-				borderTopWidth={borderTop}
-				borderBottomWidth={borderBottom}>
+				style={styles.whiteContainerStyle}				
+				>
 				<View style={styles.whiteContainerRowStyle}>
 					<View style={styles.whiteContainerRowLeftStyle}>
 						{renderImage()}
@@ -62,7 +62,7 @@ class Settings extends Component {
 					{renderSwitch()}
 				</View>
 			</View>
-		)
+		) 
 	}
 
 	renderGrayContainer(text) {
@@ -79,20 +79,25 @@ class Settings extends Component {
 		const b = 0.5
 
         return (
-            <ScrollView style={styles.containerStyle}>								
-				{this.renderGrayContainer()}
-				{this.renderGrayContainer('NOTIFICATIONS')}
-				{this.renderWhiteContainer('App notifications', b, b, true, null, null, ()=>{}, true)}				
-				{this.renderGrayContainer()}
-				{this.renderGrayContainer('ACCOUNT')}
-				<TouchableOpacity 
-					onPress={this.props.logOut}
-					activeOpacity={0.5}
-				>
-					{this.renderWhiteContainer('Log out', b, b, false, null, null)}
+			//text, borderTop, borderBottom, isSwitch, image, imageColor, callback, value
+
+			<View style={{flex:1}}>
+				<NavBar headerText="Settings"/>
+				<ScrollView style={styles.containerStyle}>								
 					{this.renderGrayContainer()}
-				</TouchableOpacity>
-            </ScrollView>
+					{this.renderGrayContainer('NOTIFICATIONS')}
+					{this.renderWhiteContainer('App notifications', b, b, true, null, null, ()=>{}, true)}				
+					{this.renderGrayContainer()}
+					{this.renderGrayContainer('ACCOUNT')}
+					<TouchableOpacity 
+						onPress={this.props.logOut}
+						activeOpacity={0.5}
+					>
+						{this.renderWhiteContainer('Log out', b, b, false, null, null)}
+						{this.renderGrayContainer()}
+					</TouchableOpacity>
+				</ScrollView>
+			</View>
         );
     }
 }
@@ -110,6 +115,8 @@ const styles = StyleSheet.create({
 	whiteContainerStyle: {
 		borderTopColor: AppColors.appGray,
 		borderBottomColor: AppColors.appGray,
+		borderTopWidth:0.5,
+		borderBottomWidth:0.5,
 		justifyContent: 'center',
 		height: 45,
 		backgroundColor: '#fff'

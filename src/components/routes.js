@@ -58,15 +58,6 @@ class RouterComponent extends Component {
         }
     }
 
-    getUser() {
-        axios.get(SERVER+'/user/'+user_id)
-        .then((res) => {            
-            if (res.data.success) {                           
-                
-            }   
-        })
-    }
-
     componentWillMount() {  
         // AsyncStorage.removeItem('id')         
         AsyncStorage.getItem('id').then(id => {
@@ -151,9 +142,8 @@ class RouterComponent extends Component {
                             />
                             <Scene
                                     key='settings'
-                                    component={Settings}                                    
-                                    navigationBarStyle={styles.headerStyle}
-                                    titleStyle={styles.headerFontStyle}
+                                    hideNavBar
+                                    component={Settings}                                                                                                            
                                     sceneStyle={styles.sceneWithoutTabbarStyle}
                                     title='Settings'                                                                    
                             />
