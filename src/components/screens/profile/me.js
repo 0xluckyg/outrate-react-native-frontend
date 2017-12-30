@@ -6,13 +6,13 @@ import {
 	Text,
     Dimensions,
     FlatList,
-    Image
+    Image,
+    TextInput,
+    KeyboardAvoidingView,
+
 } from 'react-native';
 import {AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
-import {
-	mock1,
-} from '../../../images/images';
 import Cell from '../../reusables/cell'
 import Tags from '../../reusables/tags'
 import Lightbox from 'react-native-lightbox';
@@ -25,6 +25,7 @@ import FastImage from 'react-native-fast-image'
 
 var width = Dimensions.get('window').width;
 const dummyText = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class Me extends Component {
     constructor(props) {
@@ -34,10 +35,15 @@ class Me extends Component {
     
     render() {
         return (
-            <View style={styles.mainView}>
+            <KeyboardAwareScrollView                 
+                style={styles.mainView}   
+                keyboardOpeningTime={20}   
+                // viewIsInsideTabBar={true}          
+                extraHeight={100}
+            >     
                 <Lightbox>
                 <View style={styles.imageView}>
-                    <FastImage 
+                    <FastImage
                         style={styles.image} 
                         source={{
                             uri:this.props.profile.profile,
@@ -45,16 +51,23 @@ class Me extends Component {
                         }}>
                     </FastImage>
                     <View style={styles.imageFooter}>
-                        <Text style={styles.name}>{
-                            `${this.props.profile.username}`
-                        }</Text>
+                        <TextInput 
+                            style={styles.name}
+                            placeholder="What's your name?"
+                            value={this.props.profile.username}
+                        />                                                
                     </View>                    
                 </View>
                 </Lightbox>
                 <View style={styles.profileContent}>                    
                     <Text style={styles.bioHeader}>BIO</Text>
                     <View style={styles.divider}/>
-                    <Text style={styles.bioContent}>{dummyText}</Text>
+                    <TextInput 
+                        style={styles.bioContent}
+                        placeholder='Talk about yourself!'
+                        multiline={true}
+                        value={dummyText}
+                    />
                 </View>
                 <TouchableOpacity onPress={Actions.settings}>
                     <Image 
@@ -62,7 +75,7 @@ class Me extends Component {
                         source={settings}
                     />                                        
                 </TouchableOpacity>
-             </View>
+             </KeyboardAwareScrollView>
         );        
     }
 }
@@ -91,6 +104,7 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     name: {
+        textAlign: 'center',
         marginLeft: 20,
         fontSize: 25,
         fontWeight: '200',
@@ -105,27 +119,28 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 23,
         fontWeight: '200',
-        marginBottom: 20
+        marginBottom: 20,
+        marginTop: 25
     },
     divider: {
         borderBottomColor: 'black',
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
         width: width * 0.5,
         marginBottom: 20
     },
     bioContent: {
         textAlign: 'center',
         fontWeight: '200',        
-        marginLeft: 30,
-        marginRight: 30,
-        marginBottom: 40     
+        height: 70,
+        marginBottom: 20,
+        width: width * 0.7,        
     },
     settingsButton: {
         height: 30,
         width: 30,
         alignSelf: 'flex-end',
         marginBottom: 5,
-        marginRight: 5
+        marginRight: 5,
     }
 });
 

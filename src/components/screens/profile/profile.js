@@ -19,6 +19,7 @@ import Me from './me'
 import Follows from './follows'
 import {beanie} from '../../../images/images'
 import FastImage from 'react-native-fast-image'
+import {Actions} from 'react-native-router-flux'
 
 var width = Dimensions.get('window').width;
 
@@ -52,12 +53,20 @@ class Profile extends Component {
 									renderItem={({item}) => {  									
 										if (item.image_url) {
 											return (
-												<FastImage 
-													style={styles.image} 
-													source={{
-														uri:item.image_url,
-														priority: FastImage.priority.normal
-													}}/>
+												<TouchableOpacity
+													onPress={() => Actions.updateSelected({
+														tags: item.tags,
+														image: item.image_url
+													})}
+												>
+													<FastImage 
+														style={styles.image} 
+														source={{
+															uri:item.image_url,
+															priority: FastImage.priority.normal
+														}}													
+													/>
+												</TouchableOpacity>
 											)
 										}									
 									}}        

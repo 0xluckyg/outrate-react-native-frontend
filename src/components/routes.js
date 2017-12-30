@@ -30,6 +30,7 @@ import {
 import { Actions } from 'react-native-router-flux'
 import {SERVER, SET_SELF,SET_MY_POSTS} from '../helper/constants'
 import axios from 'axios';
+import UpdateSelected from './screens/profile/updateSelected';
 
 const TabIcon = ({focused, title}) => {    
     let tabBarImage; let selectedTabBarImage;
@@ -139,6 +140,13 @@ class RouterComponent extends Component {
                                     titleStyle={styles.headerFontStyle}
                                     sceneStyle={styles.sceneWithoutTabbarStyle}
                                     title='Profile'                                                                    
+                            />
+                            <Scene
+                                    key='updateSelected'
+                                    component={UpdateSelected}
+                                    hideNavBar                                                                        
+                                    sceneStyle={styles.sceneWithoutTabbarStyle}
+                                    title='Update Post'                                                                    
                             />
                             <Scene
                                     key='settings'
