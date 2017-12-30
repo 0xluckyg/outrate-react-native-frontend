@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image'
+import {AppColors} from '../../helper/style'
 
 class Cell extends Component {
     constructor(props) {
@@ -67,18 +68,25 @@ class Cell extends Component {
 
                         marginLeft: this.props.height * (1/4),
                         marginRight: this.props.height * (1/4)
-                    }}>                        
-                        <FastImage style={{
+                    }}>        
+                        <View style={{
                             width: this.props.height * (2/3),
                             height: this.props.height * (2/3),                    
                             borderRadius: this.props.height * (1/3),
-                        }} source={{
-                            uri:this.props.data.profile,
-                            priority: FastImage.priority.normal
-                        }} resizeMode={
-                            FastImage.resizeMode.contain
-                        }
-                        />
+                            overflow: 'hidden',
+                            backgroundColor: AppColors.appLightGray
+                        }}>                
+                            <FastImage style={{
+                                flex: 1,
+                                borderRadius: this.props.height * (1/3),
+                            }} source={{
+                                uri:this.props.data.profile,
+                                priority: FastImage.priority.normal
+                            }} resizeMode={
+                                FastImage.resizeMode.contain
+                            }
+                            />
+                        </View>
                     </View>
                     <View style={styles.rowContentStyle}>
                         <View>

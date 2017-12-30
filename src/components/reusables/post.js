@@ -16,6 +16,7 @@ import {
     plus,
     share
 } from '../../images/images';
+import {AppColors} from '../../helper/style'
 import Cell from './cell'
 import Tags from './tags'
 import { connect } from 'react-redux';
@@ -169,10 +170,10 @@ const styles = StyleSheet.create({
         flex:1,
         width: width,
     },
-    imageView: {
-        // flex: 1,
+    imageView: {        
         width: width,
         height: width * 0.9,
+        backgroundColor: AppColors.appLightGray
     },
     image: {
         flex: 1,          
