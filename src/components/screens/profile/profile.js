@@ -18,6 +18,7 @@ import NoContent from '../../reusables/noContent'
 import Me from './me'
 import Follows from './follows'
 import {beanie} from '../../../images/images'
+import FastImage from 'react-native-fast-image'
 
 var width = Dimensions.get('window').width;
 
@@ -50,7 +51,14 @@ class Profile extends Component {
 									data={this.props.self.posts}
 									renderItem={({item}) => {  									
 										if (item.image_url) {
-											return <Image style={styles.image} source={{uri:item.image_url}}></Image>
+											return (
+												<FastImage 
+													style={styles.image} 
+													source={{
+														uri:item.image_url,
+														priority: FastImage.priority.normal
+													}}/>
+											)
 										}									
 									}}        
 									keyExtractor={(item, index) => index}                    

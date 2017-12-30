@@ -21,6 +21,7 @@ import { Actions } from 'react-native-router-flux'
 import {
 	settings
 } from '../../../images/images';
+import FastImage from 'react-native-fast-image'
 
 var width = Dimensions.get('window').width;
 const dummyText = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when"
@@ -36,7 +37,13 @@ class Me extends Component {
             <View style={styles.mainView}>
                 <Lightbox>
                 <View style={styles.imageView}>
-                    <Image style={styles.image} source={{uri:this.props.profile.profile}}></Image>
+                    <FastImage 
+                        style={styles.image} 
+                        source={{
+                            uri:this.props.profile.profile,
+                            priority: FastImage.priority.normal
+                        }}>
+                    </FastImage>
                     <View style={styles.imageFooter}>
                         <Text style={styles.name}>{
                             `${this.props.profile.username}`

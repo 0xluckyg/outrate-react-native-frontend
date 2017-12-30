@@ -21,6 +21,7 @@ import Tags from './tags'
 import { connect } from 'react-redux';
 import * as newsfeedActions from '../actions/newsfeedActions';
 import * as profileActions from '../actions/profileActions';
+import FastImage from 'react-native-fast-image'
 
 var width = Dimensions.get('window').width;
 
@@ -145,9 +146,15 @@ class Post extends Component {
                         style={styles.imageView}                        
                         activeOpacity={1}
                     >
-                            <ImageBackground style={styles.image} source={{uri:this.props.data.image_url}}>
+                            <FastImage 
+                                style={styles.image} 
+                                source={{
+                                    uri:this.props.data.image_url,
+                                    priority: FastImage.priority.normal
+                                }}                                
+                            >
                                 {this.isRating()}                  
-                            </ImageBackground>                          
+                            </FastImage>                          
                     </View>                    
                     </TouchableWithoutFeedback>                  
                 </View>
