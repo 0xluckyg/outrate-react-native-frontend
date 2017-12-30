@@ -10,6 +10,7 @@ const plus = require('./other/plus.png');
 const search = require('./other/search.png');
 const share = require('./other/share.png');
 const check = require('./other/check.png')
+const x = require('./other/x.png')
 
 //auth
 const fb = require('./auth/fb.png');
@@ -58,10 +59,10 @@ module.exports = {
     clothSelected,
     profile,
     profileSelected,
+    x,
 
     settings,
 
     heart,
-    heel,
-    beanie
+    heel,    
 }

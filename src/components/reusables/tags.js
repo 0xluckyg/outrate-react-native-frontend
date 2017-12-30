@@ -3,10 +3,12 @@ import {
 	StyleSheet,
 	View,
 	TouchableOpacity,
-    Text
+    Text,
+    Image
 } from 'react-native';
+import {x} from '../../images/images'
 
-const Tag = (tag) => {    
+const Tag = (tag, deleteTag) => {    
 
     const formatTag = (tag) => {
         if (tag.length > 10) {
@@ -18,6 +20,11 @@ const Tag = (tag) => {
     return (        
         <View style={styles.bubble}>
             <Text style={styles.tag}>{formatTag(tag.tag)}</Text>
+            <TouchableOpacity
+                onPress={deleteTag}
+            >
+                <Image style={styles.xStyle} source={x}/>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -32,7 +39,12 @@ class Tags extends Component {
         let counter = 0
         return this.props.tags.map(tag => {
             counter++
-            return ( <Tag key={counter} tag={tag.name}/> )
+            return ( 
+                <Tag 
+                    key={counter} 
+                    tag={tag.name}
+                    deleteTag={this.props.deleteTag}
+                /> )
         })
     }
     
@@ -41,7 +53,7 @@ class Tags extends Component {
 			<View style={styles.mainView}>                
                 {
                     this.returnTag()
-                }
+                }                                
             </View>
         );
     }
@@ -66,14 +78,21 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: 'black',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     tag: {        
         fontSize: 12,
         fontWeight: "100",
         marginLeft: 7,
-        marginRight: 7,
+        marginRight: 5,
         marginTop: 2,
         marginBottom:2 
+    },
+    xStyle: {
+        height: 12,
+        width: 12,
+        marginRight: 5
     }
 });
 
