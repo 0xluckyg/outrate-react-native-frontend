@@ -9,7 +9,7 @@ import {
     Image,
     TextInput,
     KeyboardAvoidingView,
-
+    Keyboard
 } from 'react-native';
 import {AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
@@ -22,6 +22,7 @@ import {
 	settings
 } from '../../../images/images';
 import FastImage from 'react-native-fast-image'
+import * as profileActions from '../../actions/profileActions'
 
 var width = Dimensions.get('window').width;
 const dummyText = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when"
@@ -29,11 +30,29 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 class Me extends Component {
     constructor(props) {
-        super(props);		
-				        
+        super(props);	
+        
+        this.updateName = this.updateName.bind(this)
+        this.updateBio = this.updateBio.bind(this)
+                        
+        this.state = {
+            name: this.props.profile.username,
+            bio: this.props.profile.bio
+        }
+    }
+
+    updateName(event) {
+        let username = event.nativeEvent.text
+        this.props.updateUser({username})
     }
     
-    render() {
+    updateBio(event) {
+        let bio = event.nativeEvent.text
+        this.props.updateUser({bio})
+    }
+
+
+    render() {        
         return (
             <KeyboardAwareScrollView                 
                 style={styles.mainView}   
@@ -54,26 +73,38 @@ class Me extends Component {
                         <TextInput 
                             style={styles.name}
                             placeholder="What's your name?"
-                            value={this.props.profile.username}
+                            value={this.state.name}
+                            onChangeText={currentText => {                            
+                                this.setState({name:currentText})
+                            }}
+                            onSubmitEditing={this.updateName}
                         />                                                
-                    </View>                    
+                    </View>
                 </View>
                 </Lightbox>
-                <View style={styles.profileContent}>                    
+                <View style={styles.profileContent}>
                     <Text style={styles.bioHeader}>BIO</Text>
                     <View style={styles.divider}/>
-                    <TextInput 
+                    <TextInput
                         style={styles.bioContent}
                         placeholder='Talk about yourself!'
                         multiline={true}
-                        value={dummyText}
+                        returnKeyType={"done"}
+                        value={this.state.bio}
+                        onChangeText={currentText => {                            
+                            this.setState({bio:currentText})
+                        }}
+                        onSubmitEditing={event => {
+                            this.updateBio(event)
+                            Keyboard.dismiss()
+                        }}
                     />
                 </View>
                 <TouchableOpacity onPress={Actions.settings}>
                     <Image 
                         style={styles.settingsButton}
                         source={settings}
-                    />                                        
+                    />
                 </TouchableOpacity>
              </KeyboardAwareScrollView>
         );        
@@ -130,7 +161,7 @@ const styles = StyleSheet.create({
     },
     bioContent: {
         textAlign: 'center',
-        fontWeight: '200',        
+        fontWeight: '200',
         height: 70,
         marginBottom: 20,
         width: width * 0.7,        
@@ -150,4 +181,4 @@ const mapStateToProps = (state) => (
 	}
 )
 
-export default connect(mapStateToProps, null)(Me);
+export default connect(mapStateToProps, profileActions)(Me);

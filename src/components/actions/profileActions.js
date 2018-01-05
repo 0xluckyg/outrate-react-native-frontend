@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
-import {SERVER, SET_SELF,SET_MY_POSTS} from '../../helper/constants'
+import {SERVER, SET_SELF,SET_MY_POSTS, UPDATE_SELF} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
@@ -28,8 +28,7 @@ export const getUserPosts = (skip) => {
         queryString = `${skip}-${user_id}`          
         axios.get(SERVER+'/post/user/'+queryString)
         .then((res) => { 
-            if (res.data.success) {                       
-                console.log('call success')             
+            if (res.data.success) {                                                
                 dispatch(resolveGetMyPosts(res.data.data))                
             }                                   
         })                  
@@ -62,6 +61,34 @@ export const unfollowUser = (to_unfollow) => {
     }
 }
 
+export const updateUser = (info) => {
+    return dispatch => {                
+        let user_id = store.getState().profile.self.user_id
+        console.log('update user', user_id)
+        axios.put(SERVER+'/user/update/'+user_id, info)
+        .then((res) => {
+            console.log('update user', res)
+            if (res.data.success) {                    
+                store.dispatch(indicatorActions.showToast(true))
+                dispatch(resolveUpdateUser(res.data.data))
+            }            
+        })
+    }
+}
+
+export const updatePost = (post) => {
+    return dispatch => {                
+        axios.put(SERVER+'/post/update/'+post._id, post)
+        .then((res) => {
+            console.log('update post', res)
+            if (res.data.success) {                         
+                store.dispatch(indicatorActions.showToast(true))
+                // store.dispatch(resolveUpdatePost())
+            }            
+        })
+    }
+}
+
 export const resolveGetMyPosts = (posts) => {
     return {
         type: SET_MY_POSTS,
@@ -73,5 +100,19 @@ export const resolveGetUser = (user) => {
     return {
         type: SET_SELF,
         self: user
+    }
+}
+
+export const resolveUpdateUser = (user) => {
+    return {
+        type: UPDATE_SELF,
+        self: user
+    }
+}
+
+export const resolveUpdatePost = (post) => {
+    return {
+        type: UPDATE_MY_POSTS,
+        post
     }
 }

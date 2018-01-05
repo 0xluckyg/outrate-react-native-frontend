@@ -45,7 +45,7 @@ class Profile extends Component {
 									underlineStyle={{backgroundColor:'#000', height:1}} />}
 				>
 					<View tabLabel='Posts' style={styles.mainView}>	
-					{(this.props.self.posts.length > 0) ?
+					{(this.props.self.posts != undefined && this.props.self.posts.length > 0) ?
 						<View style={styles.container}>														
 								<FlatList    
 									style={styles.list}                               

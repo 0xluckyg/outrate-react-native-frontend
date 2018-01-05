@@ -139,15 +139,15 @@ class UploadSelected extends Component {
                             tagSearch(currentTag)
                         }}
                         onSubmitEditing={(event) => {                            
-                            tags = this.state.tags    
-                            flag = false             
-                            input = event.nativeEvent.text.toLowerCase()           
-                            this.state.tags.forEach(tag => {                                
-                                if (tag.name === input) {                                    
+                            tags = this.state.tags
+                            flag = false   
+                            input = event.nativeEvent.text.toLowerCase()
+                            this.state.tags.forEach(tag => {                    
+                                if (tag.name === input) {                                 
                                     flag = true
-                                    return                                    
+                                    return                     
                                 }
-                            })                            
+                            })                
                             if (!flag) {
                                 tags.push({name:input})                                
                                 this.setState({
@@ -156,7 +156,7 @@ class UploadSelected extends Component {
                                 })
                                 this._textInput.setNativeProps({text: ''});                                
                             }                                          
-                            event.nativeEvent.text = ''                                          
+                            event.nativeEvent.text = ''
                         }}
                         value={this.state.text}
                     />
