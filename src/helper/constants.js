@@ -9,6 +9,7 @@ export const SHOW_TOAST = "SHOW_TOAST"
 export const SET_SELF = "SET_SELF"
 export const SET_MY_POSTS = "SET_MY_POSTS"
 export const UPDATE_SELF = "UPDATE_SELF"
+export const UPDATE_MY_POSTS = "UPDATE_MY_POSTS"
 
 export const UPLOAD_POST = "UPLOAD_POST"
 

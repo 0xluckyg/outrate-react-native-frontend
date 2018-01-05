@@ -55,6 +55,7 @@ class Profile extends Component {
 											return (
 												<TouchableOpacity
 													onPress={() => Actions.updateSelected({
+														post_id: item._id,
 														tags: item.tags,
 														image: item.image_url
 													})}

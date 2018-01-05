@@ -161,7 +161,23 @@ class UploadSelected extends Component {
                         value={this.state.text}
                     />
                     {this.renderTagOptions()}
-                    <Tags tags={this.state.tags}/>            
+                    <Tags 
+                        tags={this.state.tags}  
+                        editable={true}
+                        deleteTag={(originalTag) => {               
+                            index = 0;       
+                            for (i = 0; i < this.state.tags.length; i++) {
+                                tag = this.state.tags[i]                                                                                            
+                                if (tag.name === originalTag) {                                    
+                                    break
+                                }
+                                index++
+                            }                            
+                            tags = this.state.tags
+                            tags.splice(index, 1);
+                            this.setState({tags})
+                        }}
+                    />            
                     </View>
                 </TouchableWithoutFeedback>
 			</KeyboardAwareScrollView>

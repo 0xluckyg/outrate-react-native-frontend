@@ -159,7 +159,7 @@ class Post extends Component {
                     </View>                    
                     </TouchableWithoutFeedback>                  
                 </View>
-                <Tags tags={this.props.data.tags}/>            
+                <Tags tags={this.props.data.tags} editable={false}/>            
             </View>
         );
     }

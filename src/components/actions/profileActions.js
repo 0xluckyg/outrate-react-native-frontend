@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
-import {SERVER, SET_SELF,SET_MY_POSTS, UPDATE_SELF} from '../../helper/constants'
+import {SERVER, SET_SELF,SET_MY_POSTS, UPDATE_SELF, UPDATE_MY_POSTS} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
@@ -76,14 +76,15 @@ export const updateUser = (info) => {
     }
 }
 
-export const updatePost = (post) => {
+export const updatePost = (post_id, user_id, tags) => {
     return dispatch => {                
-        axios.put(SERVER+'/post/update/'+post._id, post)
+        console.log('update data', post_id, user_id, tags)
+        axios.put(SERVER+'/post/update/'+post_id, {user_id, tags})
         .then((res) => {
             console.log('update post', res)
             if (res.data.success) {                         
                 store.dispatch(indicatorActions.showToast(true))
-                // store.dispatch(resolveUpdatePost())
+                store.dispatch(resolveUpdatePost(res.data.data))
             }            
         })
     }

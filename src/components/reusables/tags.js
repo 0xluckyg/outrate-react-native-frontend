@@ -8,23 +8,28 @@ import {
 } from 'react-native';
 import {x} from '../../images/images'
 
-const Tag = (tag, deleteTag) => {    
+const Tag = ({tag, deleteTag, editable}) => {    
 
     const formatTag = (tag) => {
         if (tag.length > 10) {
             tag = tag.substring(0, 9) + '..'            
         }
         return tag
-    }
-        
+    }    
     return (        
         <View style={styles.bubble}>
-            <Text style={styles.tag}>{formatTag(tag.tag)}</Text>
-            <TouchableOpacity
-                onPress={deleteTag}
-            >
-                <Image style={styles.xStyle} source={x}/>
-            </TouchableOpacity>
+            <Text style={styles.tag}>{formatTag(tag)}</Text>                        
+            {editable ? 
+                <TouchableOpacity
+                    onPress={() => {                        
+                        deleteTag(tag)
+                    }}
+                >
+                    <Image style={styles.xStyle} source={x}/>
+                </TouchableOpacity>
+                : 
+                null
+            }            
         </View>
     );
 };
@@ -36,14 +41,15 @@ class Tags extends Component {
     }
 
     returnTag() {
-        let counter = 0
+        let counter = 0        
         return this.props.tags.map(tag => {
-            counter++
-            return ( 
+            counter++            
+            return (                 
                 <Tag 
                     key={counter} 
                     tag={tag.name}
                     deleteTag={this.props.deleteTag}
+                    editable={this.props.editable}
                 /> )
         })
     }

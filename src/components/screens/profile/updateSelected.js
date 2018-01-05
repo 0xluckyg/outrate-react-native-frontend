@@ -24,7 +24,7 @@ import {SERVER} from '../../../helper/constants'
 import axios from 'axios'
 import Tags from '../../reusables/tags'
 import Post from '../../reusables/post'
-import * as uploadActions from '../../actions/uploadActions';
+import * as profileActions from '../../actions/profileActions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import FastImage from 'react-native-fast-image'
 
@@ -117,8 +117,8 @@ class UpdateSelected extends Component {
                             <TouchableOpacity 
                                 style={styles.imageFooter}
                                 onPress={() => {
-                                        this.props.uploadPost(
-                                            this.props.image, 
+                                        this.props.updatePost(      
+                                            this.props.post_id,                                      
                                             this.props.self.user_id,
                                             this.state.tags
                                         )
@@ -161,7 +161,23 @@ class UpdateSelected extends Component {
                         value={this.state.text}
                     />
                     {/* {this.renderTagOptions()} */}
-                    <Tags tags={this.state.tags}/>            
+                    <Tags 
+                        tags={this.state.tags} 
+                        editable={true}
+                        deleteTag={(originalTag) => {               
+                            index = 0;       
+                            for (i = 0; i < this.state.tags.length; i++) {
+                                tag = this.state.tags[i]                                                                                            
+                                if (tag.name === originalTag) {                                    
+                                    break
+                                }
+                                index++
+                            }                            
+                            tags = this.state.tags
+                            tags.splice(index, 1);
+                            this.setState({tags})
+                        }}
+                    />            
                     </View>
                 </TouchableWithoutFeedback>
 			</KeyboardAwareScrollView>
@@ -266,4 +282,4 @@ const mapStateToProps = (state) => (
 	}
 )
 
-export default connect(mapStateToProps, uploadActions)(UpdateSelected);
+export default connect(mapStateToProps, profileActions)(UpdateSelected);
