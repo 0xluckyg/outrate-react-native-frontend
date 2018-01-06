@@ -40,10 +40,20 @@ class Newsfeed extends Component {
 									underlineStyle={{backgroundColor:'#000', height:1}} />}				
 				>				
 					<View tabLabel='Latest' style={styles.mainView}>
-						<List data={this.props.recentPosts}/>
+						<List 
+							data={this.props.recentPosts}
+							getMore={(length) => {
+								this.props.getRecentPosts(length)
+							}}
+						/>
 					</View>
 					<View tabLabel="Trending" style={styles.mainView}>            	            				
-						<List data={this.props.trendingPosts}/>
+						<List 
+							data={this.props.trendingPosts}
+							getMore={(length) => {
+								this.props.getTrendingPosts(length)
+							}}
+						/>
 					</View>
 				</ScrollableTabView>
 			</View>

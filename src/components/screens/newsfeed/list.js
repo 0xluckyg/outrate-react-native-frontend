@@ -27,7 +27,8 @@ class List extends Component {
         if (this.props.data.length > 0) {
             return (
                 <View style={styles.mainView}>            
-                    <FlatList                   
+                    <FlatList
+                        style={styles.listView}                   
                         scrollEnabled={this.state.scrollEnabled}                
                         data={this.props.data}
                         renderItem={({item}) => {                                                     
@@ -41,7 +42,10 @@ class List extends Component {
                         }}        
                         keyExtractor={(item, index) => index}                    
                         onEndReached={() => {
-                            console.log('end reached')
+                            if (this.props.data != undefined) {
+                                this.props.getMore(this.props.data.length)
+                            }
+                            return true
                         }}
                         onEndReachedThreshold={0.5}
                         refreshing={false}
@@ -66,6 +70,9 @@ const styles = StyleSheet.create({
 	mainView: {
 		flex: 1,
 		backgroundColor: '#fff'
+    },
+    listView: {
+		flex: 1,		
     }
 });
 

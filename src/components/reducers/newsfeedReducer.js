@@ -33,15 +33,29 @@ function changeRating(posts, updatedPost) {
 
 export default function (state = initialState, action) {     
     switch (action.type) {
-        case GET_RECENT_POSTS:                        
+        case GET_RECENT_POSTS:    
+            let recentPosts = state.recentPosts
+            if (action.skip > 0) {
+                recentPosts.splice(recentPosts.length, 0, ...action.posts)
+            } else {
+                recentPosts = action.posts
+            }
+            console.log('skip', action.skip)
+            console.log('recent', recentPosts)
             return {        
-                ...state,        
-                recentPosts: action.posts
+                ...state,      
+                recentPosts
             }               
-        case GET_TRENDING_POSTS:            
+        case GET_TRENDING_POSTS:     
+            let trendingPosts = state.trendingPosts
+            // if (action.skip > 0) {
+                // trendingPosts.splice(trendingPosts.length, 0, ...action.posts)
+            // } else {
+                trendingPosts = action.posts
+            // }
             return {           
                 ...state,     
-                trendingPosts: action.posts
+                trendingPosts
             }   
         case RATE:
             // console.log('ratine before',state.recentPosts)

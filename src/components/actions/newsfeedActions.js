@@ -11,7 +11,7 @@ export const getRecentPosts = (skip) => {
         queryString = `${skip}-${user_id}`
         axios.get(SERVER+'/post/'+queryString).then(res => {            
             if (res.data.success) {
-                dispatch(resolveGetRecentPosts(res.data.data))                
+                dispatch(resolveGetRecentPosts(res.data.data, skip))                
             }            
         })
     }
@@ -23,7 +23,7 @@ export const getTrendingPosts = (skip) => {
         queryString = `${skip}-${user_id}`                
         axios.get(SERVER+'/post/trending/').then(res => {                        
             if (res.data.success) {                
-                dispatch(resolveGetTrendingPosts(res.data.data))                
+                dispatch(resolveGetTrendingPosts(res.data.data, skip))                
             }        
         })
     }
@@ -47,17 +47,19 @@ export const ratePost = (post_id, value) => {
     }
 }
 
-export const resolveGetRecentPosts = (posts) => {
+export const resolveGetRecentPosts = (posts, skip) => {
     return {
         type: GET_RECENT_POSTS,
-        posts: posts
+        posts: posts,
+        skip
     }
 }
 
-export const resolveGetTrendingPosts = (posts) => {
+export const resolveGetTrendingPosts = (posts, skip) => {
     return {
         type: GET_TRENDING_POSTS,
-        posts: posts
+        posts: posts,
+        skip
     }
 }
 
