@@ -14,7 +14,7 @@ export const getUser = (user_id) => {
         console.log(user_id)
         axios.get(SERVER+'/user/'+user_id)
         .then((res) => {
-            console.log('why no res', res)
+            console.log('get user', res)
             if (res.data.success) {                           
                 dispatch(resolveGetUser(res.data.data))
             }                        

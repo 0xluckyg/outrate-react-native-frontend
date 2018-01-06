@@ -1,4 +1,4 @@
-import { SET_SELF,SET_MY_POSTS,UPDATE_SELF, UPDATE_MY_POSTS } from '../../helper/constants'
+import { SET_SELF,SET_MY_POSTS,UPDATE_SELF, UPDATE_MY_POSTS, LOG_OUT } from '../../helper/constants'
 import _ from 'lodash'
 import { Actions } from 'react-native-router-flux'
 
@@ -50,6 +50,11 @@ export default function (state = initialState, action) {
                     ...state.self,
                     posts: newPosts
                 }
+            }
+        case LOG_OUT:
+            return {
+                ...state,
+                self: {}
             }
         default:
             return state

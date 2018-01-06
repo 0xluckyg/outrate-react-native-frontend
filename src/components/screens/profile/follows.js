@@ -60,7 +60,7 @@ class Follows extends Component {
     render() {        
         return (
             <View style={styles.mainView}>
-                {(this.getData().length > 0) ? 
+                {(this.getData() != undefined && this.getData().length > 0) ? 
                     <FlatList                                   
                         data={this.getData()}
                         renderItem={({item}) => {                        

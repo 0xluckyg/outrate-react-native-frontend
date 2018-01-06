@@ -40,6 +40,14 @@ class List extends Component {
                             />
                         }}        
                         keyExtractor={(item, index) => index}                    
+                        onEndReached={() => {
+                            console.log('end reached')
+                        }}
+                        onEndReachedThreshold={0.5}
+                        refreshing={false}
+                        onRefresh={() => {                            
+                            console.log('on refresh')
+                        }}                        
                     />
               </View>
             );      

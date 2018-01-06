@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {AsyncStorage} from 'react-native';
-import {SET_SELF, SERVER} from '../../helper/constants'
+import {SET_SELF, SERVER, LOG_OUT} from '../../helper/constants'
 import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { FBLogin, FBLoginManager } from 'react-native-facebook-login'
@@ -23,19 +23,21 @@ export const facebookAuth = (userInfo) => {
                             profile: pic.data.data.url,
                             username: info.data.name,
                             email: info.data.email
-                        }                                                                     
-                        axios.post(SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                            
+                        }
+                        axios.post(SERVER+'/user/'+info.data.id, cleanInfo).then(res => {                                                                                                                         
                             console.log('auth', res)
                             if (res.data.success) {                                                                
                                 store.dispatch(indicatorActions.showToast(true))                                
                                 AsyncStorage.setItem('id', info.data.id).then(() => {
-                                    dispatch(resolveAuth({...cleanInfo,...{user_id:info.data.id}}))                                
+                                    dispatch(resolveAuth(res.data.data))
                                     Actions.tab()                                   
                                 })                                                                    
                             } else {
                                 console.log(res.data.message)
                             }                            
                         })                          
+                    }).catch(err => {
+                        console.log(err)
                     })
                 })
                 // this.props.onLogin && _this.props.onLogin();
@@ -52,7 +54,7 @@ export const logOut = () => {
             if (!error) {
                 AsyncStorage.removeItem('id').then(() => {
                     Actions.auth()
-                    dispatch(resolveAuth({}))                    
+                    dispatch(resolveLogOut())                    
                 })                            
             } else {
                 console.log(error)
@@ -61,6 +63,11 @@ export const logOut = () => {
     }
 }
 
+export const resolveLogOut = (res) => {
+    return {
+        type: LOG_OUT
+    }
+}
 
 
 export const resolveAuth = (res) => {        

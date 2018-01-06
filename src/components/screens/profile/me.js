@@ -83,7 +83,7 @@ class Me extends Component {
                 </View>
                 </Lightbox>
                 <View style={styles.profileContent}>
-                    <Text style={styles.bioHeader}>BIO</Text>
+                    <Text style={styles.bioHeader}>About Me</Text>
                     <View style={styles.divider}/>
                     <TextInput
                         style={styles.bioContent}

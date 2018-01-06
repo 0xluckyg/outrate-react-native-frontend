@@ -1,4 +1,4 @@
-import {GET_TRENDING_POSTS, GET_RECENT_POSTS, RATE } from '../../helper/constants'
+import {GET_TRENDING_POSTS, GET_RECENT_POSTS, RATE, LOG_OUT } from '../../helper/constants'
 
 const initialState = {
     recentPosts: [],
@@ -50,6 +50,12 @@ export default function (state = initialState, action) {
             // console.log('ratine update',state.recentPosts)
             return {
                 ...state
+            }
+        case LOG_OUT:
+            return {
+                ...state,
+                recentPosts: [],
+                trendingPosts: []
             }
         default:
             return state
