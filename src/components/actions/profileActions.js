@@ -28,8 +28,10 @@ export const getUserPosts = (skip) => {
         queryString = `${skip}-${user_id}`          
         axios.get(SERVER+'/post/user/'+queryString)
         .then((res) => { 
-            if (res.data.success) {                                                
-                dispatch(resolveGetMyPosts(res.data.data))                
+            if (res.data.success) {
+                console.log('skiip', skip)                                                
+                console.log('resdata', res.data.data)                                         
+                dispatch(resolveGetMyPosts(res.data.data, skip))                
             }                                   
         })                  
     }
@@ -90,10 +92,11 @@ export const updatePost = (post_id, user_id, tags) => {
     }
 }
 
-export const resolveGetMyPosts = (posts) => {
+export const resolveGetMyPosts = (posts, skip) => {
     return {
         type: SET_MY_POSTS,
-        posts
+        posts,
+        skip
     }
 }
 

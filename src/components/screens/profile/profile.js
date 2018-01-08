@@ -73,9 +73,9 @@ class Profile extends Component {
 									}}        
 									keyExtractor={(item, index) => index}                    
 									numColumns={2}
-									onEndReached={() => {
-										if (this.props.self.posts != undefined) {
-											// this.props.getMore(this.props.data.length)
+									onEndReached={() => {										
+										if (this.props.self.posts != undefined) {											
+											this.props.getUserPosts(this.props.self.posts.length)	
 										}
 										return true
 									}}

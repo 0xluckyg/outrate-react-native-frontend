@@ -33,22 +33,33 @@ export default function (state = initialState, action) {
             state.self = action.self                             
             return state
         case SET_MY_POSTS:
-            // state.self.posts = action.posts
-            console.log('ye',state)            
-            return {
-                ...state,
-                self: {
-                    ...state.self,
-                    posts: action.posts
-                }
+            let newPosts = state.self.posts
+            // console.log('ye',state)       
+            
+            if (action.skip > 0) {
+                newPosts.splice(newPosts.length, 0, ...action.posts)
+            } else {
+                newPosts = action.posts
             }
-        case UPDATE_MY_POSTS:
-            let newPosts = findPostAndUpdate(state.self.posts, action.post)
+
             return {
                 ...state,
                 self: {
                     ...state.self,
                     posts: newPosts
+                }
+            }
+        case UPDATE_MY_POSTS:
+            let updatedPosts = state.self.posts
+            if (action.post) {
+                let updatedPosts = findPostAndUpdate(newPosts, action.post)
+            }
+
+            return {
+                ...state,
+                self: {
+                    ...state.self,
+                    posts: updatedPosts
                 }
             }
         case LOG_OUT:
