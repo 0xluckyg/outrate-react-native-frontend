@@ -29,6 +29,7 @@ class Profile extends Component {
 	}
 	
 	componentWillMount() {
+		console.log('GET MY POSTS')
 		this.props.getUserPosts(0)		
 	}
     

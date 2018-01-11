@@ -3,7 +3,9 @@ import _ from 'lodash'
 import { Actions } from 'react-native-router-flux'
 
 const initialState = {
-    self: {}    
+    self: {
+        posts: []
+    }    
 }
 
 function findPostAndUpdate(posts, post) {
@@ -29,19 +31,16 @@ export default function (state = initialState, action) {
                     posts
                 }
             }
-        case SET_SELF:                                    
-            state.self = action.self       
-            console.log('SELF',state)                      
+        case SET_SELF:                                                                   
             return {
                 ...state,
                 self: {
-                    ...state.self
+                    ...state.self,
+                    ...action.self                                
                 }
             }
-        case SET_MY_POSTS:
-            let newPosts = state.self.posts
-            // console.log('ye',state)       
-            
+        case SET_MY_POSTS:            
+            let newPosts = state.self.posts                               
             if (action.skip > 0) {
                 newPosts.splice(newPosts.length, 0, ...action.posts)
             } else {

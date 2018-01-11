@@ -20,10 +20,9 @@ class Newsfeed extends Component {
         super(props);		
 	}
 	
-	componentWillMount() {		
-		console.log('mount')
+	componentWillMount() {				
 		this.props.getRecentPosts(this.props.recentPosts.length)
-		this.props.getTrendingPosts(this.props.trendingPosts.length)      
+		this.props.getTrendingPosts()      
 	}
     
     render() {		
@@ -60,7 +59,10 @@ class Newsfeed extends Component {
 					</View>
 					<View tabLabel="Trending" style={styles.mainView}>            	            				
 						<List 
-							data={this.props.trendingPosts}							
+							data={this.props.trendingPosts}	
+							getRecent={() => {
+								this.props.getTrendingPosts()
+							}}						
 						/>
 					</View>
 				</ScrollableTabView>

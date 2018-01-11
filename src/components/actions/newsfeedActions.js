@@ -41,13 +41,13 @@ export const getRecentPosts = (skip, postDate) => {
     }
 }
 
-export const getTrendingPosts = (skip) => {
+export const getTrendingPosts = () => {
+    console.log('TRENDING GET')
     return dispatch => {        
-        user_id = store.getState().profile.self.user_id
-        queryString = `${skip}-${user_id}`                
-        axios.get(SERVER+'/post/trending/').then(res => {                        
+        user_id = store.getState().profile.self.user_id                
+        axios.get(SERVER+'/post/trending/'+user_id).then(res => {                        
             if (res.data.success) {                
-                dispatch(resolveGetTrendingPosts(res.data.data, skip))                
+                dispatch(resolveGetTrendingPosts(res.data.data))                
             }        
         })
     }
@@ -88,11 +88,10 @@ export const resolveGetRecentRecentPosts = (posts, sliced) => {
     }
 }
 
-export const resolveGetTrendingPosts = (posts, skip) => {
+export const resolveGetTrendingPosts = (posts) => {
     return {
         type: GET_TRENDING_POSTS,
-        posts: posts,
-        skip
+        posts: posts        
     }
 }
 
