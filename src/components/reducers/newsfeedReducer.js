@@ -1,4 +1,4 @@
-import {GET_TRENDING_POSTS, GET_RECENT_POSTS, RATE, LOG_OUT } from '../../helper/constants'
+import {GET_TRENDING_POSTS, GET_RECENT_POSTS, RATE, LOG_OUT, GET_RECENT_RECENT_POSTS } from '../../helper/constants'
 
 const initialState = {
     recentPosts: [],
@@ -39,20 +39,24 @@ export default function (state = initialState, action) {
                 recentPosts.splice(recentPosts.length, 0, ...action.posts)
             } else {
                 recentPosts = action.posts
-            }
-            console.log('skip', action.skip)
-            console.log('recent', recentPosts)
+            }            
             return {        
                 ...state,      
                 recentPosts
-            }               
-        case GET_TRENDING_POSTS:     
-            let trendingPosts = state.trendingPosts
-            // if (action.skip > 0) {
-                // trendingPosts.splice(trendingPosts.length, 0, ...action.posts)
-            // } else {
-                trendingPosts = action.posts
-            // }
+            }       
+        case GET_RECENT_RECENT_POSTS:
+            recentPosts = state.recentPosts            
+            if (action.sliced) {
+                recentPosts = action.posts
+            } else {
+                recentPosts = action.posts.concat(recentPosts)                
+            }
+            return {
+                ...state,
+                recentPosts
+            }
+        case GET_TRENDING_POSTS:                 
+            trendingPosts = action.posts            
             return {           
                 ...state,     
                 trendingPosts

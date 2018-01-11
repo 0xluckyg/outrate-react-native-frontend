@@ -44,17 +44,23 @@ class Newsfeed extends Component {
 						<List 
 							data={this.props.recentPosts}
 							getMore={(length) => {
-								console.log('END REACHED')								
-								this.props.getRecentPosts(length, this.props.recentPosts[length - 1].createdAt)
+								console.log('END REACHED')	
+								if (this.props.recentPosts.length > 0) {
+									this.props.getRecentPosts(length, this.props.recentPosts[length - 1].createdAt)
+								}								
+							}}
+							getRecent={() => {
+								if (this.props.recentPosts.length > 0) {
+									this.props.getRecentRecentPosts(this.props.recentPosts[0].createdAt)
+								} else {
+									this.props.getRecentPosts(this.props.recentPosts.length)
+								}		
 							}}
 						/>
 					</View>
 					<View tabLabel="Trending" style={styles.mainView}>            	            				
 						<List 
-							data={this.props.trendingPosts}
-							getMore={(length) => {
-								this.props.getTrendingPosts(length)
-							}}
+							data={this.props.trendingPosts}							
 						/>
 					</View>
 				</ScrollableTabView>

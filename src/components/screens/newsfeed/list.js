@@ -42,7 +42,7 @@ class List extends Component {
                         }}        
                         keyExtractor={(item, index) => index}                    
                         onEndReached={() => {
-                            if (this.props.data != undefined) {
+                            if (this.props.data != undefined && this.props.getMore != undefined) {
                                 this.props.getMore(this.props.data.length)
                             }
                             return true
@@ -50,7 +50,7 @@ class List extends Component {
                         onEndReachedThreshold={0.5}
                         refreshing={false}
                         onRefresh={() => {                            
-                            console.log('on refresh')
+                            this.props.getRecent()
                         }}                        
                     />
               </View>
