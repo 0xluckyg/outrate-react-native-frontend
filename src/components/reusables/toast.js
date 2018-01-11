@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',        
     },
     textToast: {
+        backgroundColor: AppColors.main,
         width: window.width * 0.5,                
         borderRadius: 20  
     },

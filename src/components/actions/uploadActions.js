@@ -8,6 +8,11 @@ import * as profileActions from './profileActions';
 import { Actions } from 'react-native-router-flux'
 import { RNS3 } from 'react-native-aws3';
 
+function errorHandling(text) {
+    store.dispatch(indicatorActions.showSpinner(false));
+    store.dispatch(indicatorActions.showToast(text))
+}
+
 export const uploadPost = (uri, user_id, tags) => {
     store.dispatch(indicatorActions.showSpinner(true));
 
@@ -26,6 +31,7 @@ export const uploadPost = (uri, user_id, tags) => {
         successActionStatus: 201
     }
     
+    const uploadError = 'Could not upload post'
 
     return dispatch => {                        
         RNS3.put(file, options).then(response => {
@@ -47,10 +53,10 @@ export const uploadPost = (uri, user_id, tags) => {
                     store.dispatch(indicatorActions.showSpinner(false));
                     dispatch(resolveUploadPost(true))                                
                 } else {
-                    console.log(res.data.message)
+                    errorHandling(uploadError)
                 }       
             })                   
-        });
+        }).catch(err => errorHandling(uploadError));
     }
 }
 

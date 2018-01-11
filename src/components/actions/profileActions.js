@@ -5,6 +5,11 @@ import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
 
+function errorHandling(text) {
+    store.dispatch(indicatorActions.showSpinner(false));
+    store.dispatch(indicatorActions.showToast(text))
+}
+
 export const getUser = (user_id) => {     
     return dispatch => {      
         if (user_id == undefined) {
@@ -16,7 +21,7 @@ export const getUser = (user_id) => {
             console.log('get user', res)
             if (res.data.success) {                           
                 dispatch(resolveGetUser(res.data.data))
-            }                        
+            }
         })
     }
 }
@@ -39,13 +44,15 @@ export const getUserPosts = (skip, postDate) => {
                 console.log('skiip', skip)                                                
                 console.log('resdata', res.data.data)                                         
                 dispatch(resolveGetMyPosts(res.data.data, skip))                
-            }                                   
+            }
         })                  
     }
 }
 
 export const followUser = (to_follow) => {
     store.dispatch(indicatorActions.showSpinner(true));
+    const followError = 'Could not follow user'
+
     return dispatch => {        
         let user_id = store.getState().profile.self.user_id
         axios.post(SERVER+'/user/follow/'+user_id, {to_follow})
@@ -54,13 +61,17 @@ export const followUser = (to_follow) => {
                 store.dispatch(getUser())
                 store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))
+            } else {
+                errorHandling(followError)
             }
-        })
+        }).catch(err => errorHandling(followError))
     }
 }
 
 export const unfollowUser = (to_unfollow) => {
     store.dispatch(indicatorActions.showSpinner(true));
+    unfollowError = 'Could not unfollow user'
+
     return dispatch => {        
         let user_id = store.getState().profile.self.user_id
         axios.post(SERVER+'/user/unfollow/'+user_id, {to_unfollow})
@@ -69,13 +80,16 @@ export const unfollowUser = (to_unfollow) => {
                 store.dispatch(getUser())                            
                 store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))
-            }            
-        })
+            } else {
+                errorHandling(unfollowError)
+            }     
+        }).catch(err => errorHandling(unfollowError))
     }
 }
 
 export const updateUser = (info) => {
     store.dispatch(indicatorActions.showSpinner(true));
+    const userUpdateError = 'Could not update user'
     return dispatch => {                
         let user_id = store.getState().profile.self.user_id
         console.log('update user', user_id)
@@ -86,13 +100,17 @@ export const updateUser = (info) => {
                 store.dispatch(indicatorActions.showSpinner(false)); 
                 store.dispatch(indicatorActions.showToast(true))
                 dispatch(resolveUpdateUser(res.data.data))
-            }            
-        })
+            } else {
+                errorHandling(userUpdateError)
+            }        
+        }).catch(err => errorHandling(userUpdateError))
     }
 }
 
 export const updatePost = (post_id, user_id, tags) => {
     store.dispatch(indicatorActions.showSpinner(true));
+    const postUpdateError = 'Could not update post'
+
     return dispatch => {                
         console.log('update data', post_id, user_id, tags)
         axios.put(SERVER+'/post/update/'+post_id, {user_id, tags})
@@ -102,8 +120,10 @@ export const updatePost = (post_id, user_id, tags) => {
                 store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))
                 store.dispatch(resolveUpdatePost(res.data.data))
-            }            
-        })
+            } else {
+                errorHandling(postUpdateError)
+            }   
+        }).catch(err => errorHandling(postUpdateError))
     }
 }
 
