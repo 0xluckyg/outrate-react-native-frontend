@@ -9,6 +9,8 @@ import { Actions } from 'react-native-router-flux'
 import { RNS3 } from 'react-native-aws3';
 
 export const uploadPost = (uri, user_id, tags) => {
+    store.dispatch(indicatorActions.showSpinner(true));
+
     const file = {        
         uri: uri,
         name: `${user_id}_${Date.now()}.png`,
@@ -42,6 +44,7 @@ export const uploadPost = (uri, user_id, tags) => {
                     store.dispatch(newsfeedActions.getTrendingPosts());
                     store.dispatch(profileActions.getUserPosts());
                     store.dispatch(indicatorActions.showToast(true))                                
+                    store.dispatch(indicatorActions.showSpinner(false));
                     dispatch(resolveUploadPost(true))                                
                 } else {
                     console.log(res.data.message)

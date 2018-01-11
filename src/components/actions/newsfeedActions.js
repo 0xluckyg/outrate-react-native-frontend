@@ -5,8 +5,7 @@ import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
 
-export const getRecentRecentPosts = (postDate) => {
-    console.log('recentRecent')
+export const getRecentRecentPosts = (postDate) => {    
     return dispatch => {
         let user_id = store.getState().profile.self.user_id                
         let queryString = `${user_id}/${postDate}`                
@@ -21,28 +20,23 @@ export const getRecentRecentPosts = (postDate) => {
     }
 }
 
-export const getRecentPosts = (skip, postDate) => {
-    console.log('CALLED!!')
+export const getRecentPosts = (skip, postDate) => {    
     return dispatch => {                                
         user_id = store.getState().profile.self.user_id        
         let queryString = user_id
         if (postDate) {
             queryString = `${user_id}/${postDate}`
-        }   
-        console.log('queryString1 ',SERVER+'/post/'+queryString)
-        axios.get(SERVER+'/post/'+queryString).then(res => {                        
-            console.log('queryString ',SERVER+'/post/'+queryString)
+        }           
+        axios.get(SERVER+'/post/'+queryString).then(res => {                                   
             if (res.data.success) {
                 dispatch(resolveGetRecentPosts(res.data.data, skip))                
             }            
-        }).catch(err => {
-            console.log('queryString2 ',SERVER+'/post/'+queryString)
+        }).catch(err => {            
         })
     }
 }
 
-export const getTrendingPosts = () => {
-    console.log('TRENDING GET')
+export const getTrendingPosts = () => {    
     return dispatch => {        
         user_id = store.getState().profile.self.user_id                
         axios.get(SERVER+'/post/trending/'+user_id).then(res => {                        
@@ -54,14 +48,16 @@ export const getTrendingPosts = () => {
 }
 
 export const ratePost = (post_id, value) => {    
+    store.dispatch(indicatorActions.showSpinner(true));
+
     return dispatch => {
         axios.post(SERVER+'/post/rate/'+post_id, {
             rating: value,
             user_id: user_id = store.getState().profile.self.user_id
-        }).then(res => {
-            console.log('rateSuccess',res)
-            if (res.data.success) {
-                console.log('rate done',res.data)
+        }).then(res => {           
+            console.log('rate why?', res) 
+            if (res.data.success) {                
+                store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))                                
                 dispatch(resolveRating(res.data.data))
             }  else {

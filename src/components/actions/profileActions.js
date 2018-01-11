@@ -6,7 +6,6 @@ import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
 
 export const getUser = (user_id) => {     
-
     return dispatch => {      
         if (user_id == undefined) {
             user_id = store.getState().profile.self.user_id   
@@ -46,12 +45,14 @@ export const getUserPosts = (skip, postDate) => {
 }
 
 export const followUser = (to_follow) => {
+    store.dispatch(indicatorActions.showSpinner(true));
     return dispatch => {        
         let user_id = store.getState().profile.self.user_id
         axios.post(SERVER+'/user/follow/'+user_id, {to_follow})
         .then((res) => {
             if (res.data.success) {                
                 store.dispatch(getUser())
+                store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))
             }
         })
@@ -59,12 +60,14 @@ export const followUser = (to_follow) => {
 }
 
 export const unfollowUser = (to_unfollow) => {
+    store.dispatch(indicatorActions.showSpinner(true));
     return dispatch => {        
         let user_id = store.getState().profile.self.user_id
         axios.post(SERVER+'/user/unfollow/'+user_id, {to_unfollow})
         .then((res) => {
             if (res.data.success) {    
                 store.dispatch(getUser())                            
+                store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))
             }            
         })
@@ -72,13 +75,15 @@ export const unfollowUser = (to_unfollow) => {
 }
 
 export const updateUser = (info) => {
+    store.dispatch(indicatorActions.showSpinner(true));
     return dispatch => {                
         let user_id = store.getState().profile.self.user_id
         console.log('update user', user_id)
         axios.put(SERVER+'/user/update/'+user_id, info)
         .then((res) => {
             console.log('update user', res)
-            if (res.data.success) {                    
+            if (res.data.success) {                   
+                store.dispatch(indicatorActions.showSpinner(false)); 
                 store.dispatch(indicatorActions.showToast(true))
                 dispatch(resolveUpdateUser(res.data.data))
             }            
@@ -87,12 +92,14 @@ export const updateUser = (info) => {
 }
 
 export const updatePost = (post_id, user_id, tags) => {
+    store.dispatch(indicatorActions.showSpinner(true));
     return dispatch => {                
         console.log('update data', post_id, user_id, tags)
         axios.put(SERVER+'/post/update/'+post_id, {user_id, tags})
         .then((res) => {
             console.log('update post', res)
             if (res.data.success) {                         
+                store.dispatch(indicatorActions.showSpinner(false));
                 store.dispatch(indicatorActions.showToast(true))
                 store.dispatch(resolveUpdatePost(res.data.data))
             }            

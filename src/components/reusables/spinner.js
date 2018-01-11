@@ -6,6 +6,7 @@ import {
     Animated,
     Easing
 } from 'react-native';
+import {AppColors} from '../../helper/style';
 
 import * as indicatorActions from '../actions/indicatorActions';
 import { connect } from 'react-redux';
@@ -21,7 +22,7 @@ class Spinner extends Component {
         this.spin();
     }
 
-    spin() {
+    spin() {        
         this.spinValue.setValue(0)
         Animated.timing(
             this.spinValue,
@@ -39,6 +40,7 @@ class Spinner extends Component {
             inputRange: [0, 1],
             outputRange: ['0deg', '360deg']
         })        
+        console.log('show?', this.props.show)
         if (this.props.show) {
             return (
                 <Animated.View style={{
@@ -73,7 +75,8 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderRadius: 10,        
-        opacity: 0.8
+        opacity: 0.8,
+        backgroundColor: AppColors.main
     }
 });
 
