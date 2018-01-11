@@ -30,8 +30,14 @@ export default function (state = initialState, action) {
                 }
             }
         case SET_SELF:                                    
-            state.self = action.self                             
-            return state
+            state.self = action.self       
+            console.log('SELF',state)                      
+            return {
+                ...state,
+                self: {
+                    ...state.self
+                }
+            }
         case SET_MY_POSTS:
             let newPosts = state.self.posts
             // console.log('ye',state)       

@@ -20,10 +20,11 @@ class Newsfeed extends Component {
         super(props);		
 	}
 	
-	componentWillMount() {
+	componentWillMount() {		
+		console.log('mount')
 		this.props.getRecentPosts(this.props.recentPosts.length)
 		this.props.getTrendingPosts(this.props.trendingPosts.length)      
-    }
+	}
     
     render() {		
 		console.log(this.props.recentPosts)
@@ -43,7 +44,8 @@ class Newsfeed extends Component {
 						<List 
 							data={this.props.recentPosts}
 							getMore={(length) => {
-								this.props.getRecentPosts(length)
+								console.log('END REACHED')								
+								this.props.getRecentPosts(length, this.props.recentPosts[length - 1].createdAt)
 							}}
 						/>
 					</View>
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => (
 	{
         recentPosts: state.newsfeed.recentPosts,
-        trendingPosts: state.newsfeed.trendingPosts,        
+		trendingPosts: state.newsfeed.trendingPosts,        		
 	}
 )
 

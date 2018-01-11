@@ -22,13 +22,21 @@ export const getUser = (user_id) => {
     }
 }
 
-export const getUserPosts = (skip) => {          
+export const getUserPosts = (skip, postDate) => {     
     return dispatch => {                
         let user_id = store.getState().profile.self.user_id
-        queryString = `${skip}-${user_id}`          
-        axios.get(SERVER+'/post/user/'+queryString)
+        let queryString = user_id
+        if (postDate) {
+            queryString = `${user_id}/${postDate}`
+        } else {
+            let t = new Date().toISOString();
+            queryString = `${user_id}/${t}`
+        }                        
+        axios.get(SERVER+'/post/user/'+queryString)        
         .then((res) => { 
+            console.log('POSTS QUERY ',queryString)
             if (res.data.success) {
+                console.log('posts',res.data)
                 console.log('skiip', skip)                                                
                 console.log('resdata', res.data.data)                                         
                 dispatch(resolveGetMyPosts(res.data.data, skip))                

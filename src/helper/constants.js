@@ -1,5 +1,5 @@
 //SERVER
-// export const SERVER = "http://localhost:4000/api"
+// export const SERVER = "http://localhost:3000/api"
 export const SERVER = "http://159.203.142.248/api"
 
 //INDICATORS

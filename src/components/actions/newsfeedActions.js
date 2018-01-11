@@ -5,14 +5,22 @@ import {store} from '../../store'
 import * as indicatorActions from './indicatorActions';
 import { Actions } from 'react-native-router-flux'
 
-export const getRecentPosts = (skip) => {
-    return dispatch => {                        
-        user_id = store.getState().profile.self.user_id
-        queryString = `${skip}-${user_id}`
-        axios.get(SERVER+'/post/'+queryString).then(res => {            
+export const getRecentPosts = (skip, postDate) => {
+    console.log('CALLED!!')
+    return dispatch => {                                
+        user_id = store.getState().profile.self.user_id        
+        let queryString = user_id
+        if (postDate) {
+            queryString = `${user_id}/${postDate}`
+        }   
+        console.log('queryString1 ',SERVER+'/post/'+queryString)
+        axios.get(SERVER+'/post/'+queryString).then(res => {                        
+            console.log('queryString ',SERVER+'/post/'+queryString)
             if (res.data.success) {
                 dispatch(resolveGetRecentPosts(res.data.data, skip))                
             }            
+        }).catch(err => {
+            console.log('queryString2 ',SERVER+'/post/'+queryString)
         })
     }
 }

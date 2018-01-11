@@ -75,7 +75,8 @@ class Profile extends Component {
 									numColumns={2}
 									onEndReached={() => {										
 										if (this.props.self.posts != undefined) {											
-											this.props.getUserPosts(this.props.self.posts.length)	
+											let length = this.props.self.posts.length
+											this.props.getUserPosts(length, this.props.self.posts[length-1].createdAt)	
 										}
 										return true
 									}}
