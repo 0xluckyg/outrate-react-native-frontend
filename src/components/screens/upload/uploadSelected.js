@@ -47,56 +47,56 @@ class UploadSelected extends Component {
                 
         this.state = {
             tags: [],
-            tagOptions: [],
+            // tagOptions: [],
             currentTag: ''
         }                
 
-        this.searchTags = this.searchTags.bind(this)
-        this.renderTagOptions = this.renderTagOptions.bind(this)
+        // this.searchTags = this.searchTags.bind(this)
+        // this.renderTagOptions = this.renderTagOptions.bind(this)
     }
 
-    searchTags(tag) {
-        axios.get(SERVER+'/tag/search/' + tag).then(res => {            
-            if (res.data.success) {
-                console.log('a', res.data)
-                this.setState({tagOptions: res.data.data})
-            }
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+    // searchTags(tag) {
+    //     axios.get(SERVER+'/tag/search/' + tag).then(res => {            
+    //         if (res.data.success) {
+    //             console.log('a', res.data)
+    //             this.setState({tagOptions: res.data.data})
+    //         }
+    //     }).catch(err => {
+    //         console.log(err)
+    //     })
+    // }
 
-    renderTagOptions() {
-        if (this.state.tagOptions.length > 0) {
-            console.log(this.state.tagOptions)
-            return (                
-                <FlatList
-                    style={styles.tagOptions}
-                    data={this.state.tagOptions}
-                    renderItem={({item}) => {                                                                         
-                        return <TouchableOpacity 
-                                    style={styles.tagOption}
-                                    onPress={() => {
-                                        this.setState({
-                                            tag: this.state.tags.push(item.name),
-                                            tagOptions: []
-                                        })
-                                    }}
-                                >
-                                    <Text style={styles.tagOptionText}>
-                                        {item.name}
-                                    </Text>          
-                                </TouchableOpacity>                                    
-                    }}  
-                    keyExtractor={(item, index) => index}        
-                >                    
-                </FlatList>
-            )
-        }
-    }
+    // renderTagOptions() {
+    //     if (this.state.tagOptions.length > 0) {
+    //         console.log(this.state.tagOptions)
+    //         return (                
+    //             <FlatList
+    //                 style={styles.tagOptions}
+    //                 data={this.state.tagOptions}
+    //                 renderItem={({item}) => {                                                                         
+    //                     return <TouchableOpacity 
+    //                                 style={styles.tagOption}
+    //                                 onPress={() => {
+    //                                     this.setState({
+    //                                         tag: this.state.tags.push(item.name),
+    //                                         tagOptions: []
+    //                                     })
+    //                                 }}
+    //                             >
+    //                                 <Text style={styles.tagOptionText}>
+    //                                     {item.name}
+    //                                 </Text>          
+    //                             </TouchableOpacity>                                    
+    //                 }}  
+    //                 keyExtractor={(item, index) => index}        
+    //             >                    
+    //             </FlatList>
+    //         )
+    //     }
+    // }
     
     render() {        
-        const tagSearch = Lodash.debounce((term) => {this.searchTags(term)}, 300);
+        // const tagSearch = Lodash.debounce((term) => {this.searchTags(term)}, 300);
         
         return (
             <KeyboardAwareScrollView 
@@ -136,7 +136,7 @@ class UploadSelected extends Component {
                         style={styles.tagInput}
                         onChangeText={currentTag => {                            
                             this.setState({currentTag})
-                            tagSearch(currentTag)
+                            // tagSearch(currentTag)
                         }}
                         onSubmitEditing={(event) => {                            
                             tags = this.state.tags
@@ -152,7 +152,7 @@ class UploadSelected extends Component {
                                 tags.push({name:input})                                
                                 this.setState({
                                     tags,
-                                    tagOptions: []
+                                    // tagOptions: []
                                 })
                                 this._textInput.setNativeProps({text: ''});                                
                             }                                          
@@ -160,7 +160,8 @@ class UploadSelected extends Component {
                         }}
                         value={this.state.text}
                     />
-                    {this.renderTagOptions()}
+                    {/* tag search */}
+                    {/* {this.renderTagOptions()} */}
                     <Tags 
                         tags={this.state.tags}  
                         editable={true}
